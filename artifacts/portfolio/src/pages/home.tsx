@@ -29,7 +29,12 @@ import {
   Compass,
   Wind,
   Check,
-  ChevronRight
+  ChevronRight,
+  BarChart3,
+  Brain,
+  TrendingUp,
+  Terminal,
+  LineChart
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -99,7 +104,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<"skills" | "experience" | "education">("skills");
   
   // Active skills category
-  const [skillCategory, setSkillCategory] = useState<"frontend" | "backend" | "tools">("frontend");
+  const [skillCategory, setSkillCategory] = useState<"frontend" | "backend" | "tools" | "data">("frontend");
 
   // Project 1 state (Weather)
   const [selectedCity, setSelectedCity] = useState<"sf" | "tokyo" | "london">("sf");
@@ -471,13 +476,13 @@ src="/Linkdin-pr.jpg"
                     >
                       {/* Skills Sub-navigation */}
                       <div className="flex gap-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground border-b border-border/30 pb-2">
-                        {["frontend", "backend", "tools"].map((cat) => (
+                        {["frontend", "backend", "tools", "data"].map((cat) => (
                           <button
                             key={cat}
                             onClick={() => setSkillCategory(cat as any)}
                             className={`pb-2 transition-colors relative hover:text-foreground ${skillCategory === cat ? "text-primary border-b border-primary font-bold" : ""}`}
                           >
-                            {cat}
+                            {cat === "data" ? "data analysis" : cat}
                           </button>
                         ))}
                       </div>
@@ -525,6 +530,23 @@ src="/Linkdin-pr.jpg"
                           { name: "VS Code", level: "Expert", icon: <Wrench className="h-4 w-4 text-primary" /> },
                           { name: "Command Line", level: "Advanced", icon: <Wrench className="h-4 w-4 text-primary" /> },
                           { name: "Figma (Design)", level: "Intermediate", icon: <Wrench className="h-4 w-4 text-primary" /> }
+                        ].map((skill) => (
+                          <div key={skill.name} className="flex items-center gap-3 p-3 rounded-lg border border-border/50 bg-secondary/10 hover:border-primary/30 transition-colors">
+                            {skill.icon}
+                            <div>
+                              <div className="text-sm font-semibold">{skill.name}</div>
+                              <div className="text-xs text-muted-foreground">{skill.level}</div>
+                            </div>
+                          </div>
+                        ))}
+
+                        {skillCategory === "data" && [
+                          { name: "Python", level: "Advanced", icon: <Terminal className="h-4 w-4 text-primary" /> },
+                          { name: "Pandas", level: "Advanced", icon: <Database className="h-4 w-4 text-primary" /> },
+                          { name: "Scikit-Learn", level: "Intermediate", icon: <Brain className="h-4 w-4 text-primary" /> },
+                          { name: "Tableau", level: "Advanced", icon: <BarChart3 className="h-4 w-4 text-primary" /> },
+                          { name: "Power BI", level: "Advanced", icon: <TrendingUp className="h-4 w-4 text-primary" /> },
+                          { name: "Data Analysis", level: "Advanced", icon: <LineChart className="h-4 w-4 text-primary" /> }
                         ].map((skill) => (
                           <div key={skill.name} className="flex items-center gap-3 p-3 rounded-lg border border-border/50 bg-secondary/10 hover:border-primary/30 transition-colors">
                             {skill.icon}
