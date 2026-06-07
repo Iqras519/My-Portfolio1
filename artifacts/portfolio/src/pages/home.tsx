@@ -95,8 +95,8 @@ export default function Home() {
   // Mouse cursor spotlight pos
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   
-  // Active category in Skills/Experience tabs
-  const [activeTab, setActiveTab] = useState<"skills" | "experience">("skills");
+  // Active category in Skills/Experience/Education tabs
+  const [activeTab, setActiveTab] = useState<"skills" | "experience" | "education">("skills");
   
   // Active skills category
   const [skillCategory, setSkillCategory] = useState<"frontend" | "backend" | "tools">("frontend");
@@ -413,7 +413,7 @@ src="/Linkdin-pr.jpg"
             {/* Right Side: Tab Switcher (Skills vs Experience) */}
             <div className="lg:col-span-7">
               {/* Tab Selector */}
-              <div className="flex border-b border-border/60 mb-8 p-1 bg-secondary/15 rounded-lg max-w-[280px]">
+              <div className="flex border-b border-border/60 mb-8 p-1 bg-secondary/15 rounded-lg max-w-[360px]">
                 <button
                   onClick={() => setActiveTab("skills")}
                   className={`flex-1 py-2 text-sm font-medium rounded-md transition-all relative ${activeTab === "skills" ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
@@ -432,6 +432,18 @@ src="/Linkdin-pr.jpg"
                 >
                   Journey
                   {activeTab === "experience" && (
+                    <motion.div 
+                      layoutId="activeTabGlow"
+                      className="absolute inset-0 bg-background rounded-md shadow-xs border border-border/40 z-[-1]"
+                    />
+                  )}
+                </button>
+                <button
+                  onClick={() => setActiveTab("education")}
+                  className={`flex-1 py-2 text-sm font-medium rounded-md transition-all relative ${activeTab === "education" ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
+                >
+                  Education
+                  {activeTab === "education" && (
                     <motion.div 
                       layoutId="activeTabGlow"
                       className="absolute inset-0 bg-background rounded-md shadow-xs border border-border/40 z-[-1]"
@@ -519,7 +531,7 @@ src="/Linkdin-pr.jpg"
                         ))}
                       </div>
                     </motion.div>
-                  ) : (
+                  ) : activeTab === "experience" ? (
                     <motion.div
                       key="experience-tab"
                       initial={{ opacity: 0, y: 10 }}
@@ -557,16 +569,43 @@ src="/Linkdin-pr.jpg"
                           </p>
                         </div>
 
-                        {/* Item 3 */}
+                      </div>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="education-tab"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.2 }}
+                      className="space-y-6"
+                    >
+                      {/* Timeline */}
+                      <div className="border-l border-border/80 pl-6 space-y-8 relative">
+                        
+                        {/* Education Item 1 */}
                         <div className="relative">
-                          <span className="absolute -left-[31px] top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-background border-2 border-muted-foreground" />
+                          <span className="absolute -left-[31px] top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-background border-2 border-primary" />
                           <div className="flex justify-between items-baseline gap-2 mb-1.5 flex-wrap">
-                            <h4 className="text-base font-semibold text-foreground">CS Student</h4>
-                            <span className="text-xs text-muted-foreground">2023 - Present</span>
+                            <h4 className="text-base font-semibold text-foreground">B.S. in Computer Science</h4>
+                            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-primary/10 text-primary uppercase">2023 - Present</span>
                           </div>
                           <p className="text-xs text-muted-foreground mb-2">Academic Foundation</p>
                           <p className="text-sm font-serif text-muted-foreground leading-relaxed">
-                            Engaging in computer science curricula covering algorithmic efficiency, database design, software engineering methodologies, and security.
+                            Engaging in computer science curricula covering algorithmic efficiency, database design, software engineering methodologies, and systems security.
+                          </p>
+                        </div>
+
+                        {/* Education Item 2 */}
+                        <div className="relative">
+                          <span className="absolute -left-[31px] top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-background border-2 border-muted-foreground" />
+                          <div className="flex justify-between items-baseline gap-2 mb-1.5 flex-wrap">
+                            <h4 className="text-base font-semibold text-foreground">High School & Intermediate Diploma</h4>
+                            <span className="text-xs text-muted-foreground">2021 - 2023</span>
+                          </div>
+                          <p className="text-xs text-muted-foreground mb-2">Mathematics & Science Track</p>
+                          <p className="text-sm font-serif text-muted-foreground leading-relaxed">
+                            Completed advanced coursework in Calculus, Physics, and introductory computer science fundamentals.
                           </p>
                         </div>
 
