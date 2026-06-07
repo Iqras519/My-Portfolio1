@@ -396,7 +396,12 @@ src="/Linkdin-pr.jpg"
               </p>
               
               <div className="pt-4 flex gap-4">
-                <a href="#" className="p-2 rounded-full border border-border hover:bg-secondary/40 text-muted-foreground hover:text-foreground transition-colors">
+                <a
+                  href="https://github.com/Iqras519"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="p-2 rounded-full border border-border hover:bg-secondary/40 text-muted-foreground hover:text-foreground transition-colors"
+                >
                   <Github className="h-5 w-5" />
                 </a>
                 <a
