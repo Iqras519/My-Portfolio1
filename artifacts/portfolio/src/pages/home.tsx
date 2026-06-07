@@ -29,16 +29,16 @@ import {
   Compass,
   Wind,
   Check,
-  ChevronRight,
-  BarChart3,
-  Brain,
-  TrendingUp,
-  Terminal,
-  LineChart
+  ChevronRight
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+
+// Brand icons for the skills section
+import { FaReact, FaHtml5, FaCss3Alt, FaNodeJs, FaLock, FaTerminal, FaFigma, FaGithub } from "react-icons/fa";
+import { SiTypescript, SiTailwindcss, SiFramer, SiNextdotjs, SiExpress, SiPostgresql, SiVite, SiPnpm, SiPostman } from "react-icons/si";
+import { VscCode } from "react-icons/vsc";
 
 // Zod validation schema for contact form
 const contactSchema = z.object({
@@ -104,7 +104,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<"skills" | "experience" | "education">("skills");
   
   // Active skills category
-  const [skillCategory, setSkillCategory] = useState<"frontend" | "backend" | "tools" | "data">("frontend");
+  const [skillCategory, setSkillCategory] = useState<"frontend" | "backend" | "tools">("frontend");
 
   // Project 1 state (Weather)
   const [selectedCity, setSelectedCity] = useState<"sf" | "tokyo" | "london">("sf");
@@ -256,7 +256,7 @@ export default function Home() {
           
           {/* Logo */}
           <a href="#hero" className="font-bold tracking-wide text-xl font-serif text-foreground hover:opacity-85 transition-opacity">
-            Iqra<span className="text-primary font-sans font-light">.</span>
+            Iqra Shamim<span className="text-primary font-sans font-light">.</span>
           </a>
 
           {/* Desktop Navigation Links */}
@@ -369,7 +369,7 @@ src="/Linkdin-pr.jpg"
             className="text-lg md:text-xl text-muted-foreground max-w-2xl font-serif leading-relaxed mb-10 mx-auto md:mx-0"
           >
             
-             I am Iqra, a student developer focused on engineering minimal, visually stunning, and highly functional digital tools that resolve real-world tasks.
+             I am Iqra Shamim, a student developer focused on engineering minimal, visually stunning, and highly functional digital tools that resolve real-world tasks.
           </motion.p>
 
           <motion.div variants={fadeIn} className="flex flex-col sm:flex-row justify-center md:justify-start gap-4">
@@ -476,13 +476,13 @@ src="/Linkdin-pr.jpg"
                     >
                       {/* Skills Sub-navigation */}
                       <div className="flex gap-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground border-b border-border/30 pb-2">
-                        {["frontend", "backend", "tools", "data"].map((cat) => (
+                        {["frontend", "backend", "tools"].map((cat) => (
                           <button
                             key={cat}
                             onClick={() => setSkillCategory(cat as any)}
                             className={`pb-2 transition-colors relative hover:text-foreground ${skillCategory === cat ? "text-primary border-b border-primary font-bold" : ""}`}
                           >
-                            {cat === "data" ? "data analysis" : cat}
+                            {cat}
                           </button>
                         ))}
                       </div>
@@ -490,70 +490,92 @@ src="/Linkdin-pr.jpg"
                       {/* Render Skill Badges Grid */}
                       <div className="grid grid-cols-2 gap-4">
                         {skillCategory === "frontend" && [
-                          { name: "React", level: "Advanced", icon: <Code2 className="h-4 w-4 text-primary" /> },
-                          { name: "TypeScript", level: "Intermediate", icon: <Code2 className="h-4 w-4 text-primary" /> },
-                          { name: "Tailwind CSS", level: "Advanced", icon: <Code2 className="h-4 w-4 text-primary" /> },
-                          { name: "Framer Motion", level: "Intermediate", icon: <Code2 className="h-4 w-4 text-primary" /> },
-                          { name: "Next.js", level: "Intermediate", icon: <Code2 className="h-4 w-4 text-primary" /> },
-                          { name: "HTML5 / CSS3", level: "Advanced", icon: <Code2 className="h-4 w-4 text-primary" /> }
+                          { name: "React", level: "Advanced", icon: <FaReact className="h-5 w-5" />, color: "#61DAFB" },
+                          { name: "TypeScript", level: "Intermediate", icon: <SiTypescript className="h-5 w-5" />, color: "#3178C6" },
+                          { name: "Tailwind CSS", level: "Advanced", icon: <SiTailwindcss className="h-5 w-5" />, color: "#38BDF8" },
+                          { name: "Framer Motion", level: "Intermediate", icon: <SiFramer className="h-5 w-5" />, color: "#F024B6" },
+                          { name: "Next.js", level: "Intermediate", icon: <SiNextdotjs className="h-5 w-5" />, color: "#808080" },
+                          { name: "HTML5 / CSS3", level: "Advanced", icon: <div className="flex gap-1.5"><FaHtml5 className="h-5 w-5" /><FaCss3Alt className="h-5 w-5" /></div>, color: "#E34F26" }
                         ].map((skill) => (
-                          <div key={skill.name} className="flex items-center gap-3 p-3 rounded-lg border border-border/50 bg-secondary/10 hover:border-primary/30 transition-colors">
-                            {skill.icon}
+                          <div 
+                            key={skill.name} 
+                            style={{ "--brand-color": skill.color } as React.CSSProperties}
+                            className="flex items-center gap-4 p-4 rounded-xl border border-border/50 bg-secondary/5 hover:bg-[var(--brand-color)]/[0.04] hover:border-[var(--brand-color)]/30 transition-all duration-300 group relative overflow-hidden shadow-2xs hover:shadow-xs"
+                          >
+                            <div className="p-2.5 rounded-lg bg-background/80 border border-border/40 group-hover:border-[var(--brand-color)]/20 transition-colors shadow-2xs" style={{ color: skill.color }}>
+                              {skill.icon}
+                            </div>
                             <div>
-                              <div className="text-sm font-semibold">{skill.name}</div>
+                              <div className="text-sm font-semibold tracking-wide text-foreground group-hover:text-[var(--brand-color)] transition-colors">{skill.name}</div>
                               <div className="text-xs text-muted-foreground">{skill.level}</div>
                             </div>
+                            
+                            <div 
+                              className="absolute inset-0 -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                              style={{
+                                background: `radial-gradient(120px at 40px 40px, ${skill.color}15, transparent)`
+                              }}
+                            />
                           </div>
                         ))}
 
                         {skillCategory === "backend" && [
-                          { name: "Node.js", level: "Intermediate", icon: <Database className="h-4 w-4 text-primary" /> },
-                          { name: "Express.js", level: "Advanced", icon: <Database className="h-4 w-4 text-primary" /> },
-                          { name: "PostgreSQL", level: "Intermediate", icon: <Database className="h-4 w-4 text-primary" /> },
-                          { name: "Drizzle ORM", level: "Intermediate", icon: <Database className="h-4 w-4 text-primary" /> },
-                          { name: "RESTful APIs", level: "Advanced", icon: <Database className="h-4 w-4 text-primary" /> },
-                          { name: "Authentication", level: "Intermediate", icon: <Database className="h-4 w-4 text-primary" /> }
+                          { name: "Node.js", level: "Intermediate", icon: <FaNodeJs className="h-5 w-5" />, color: "#339933" },
+                          { name: "Express.js", level: "Advanced", icon: <SiExpress className="h-5 w-5" />, color: "#808080" },
+                          { name: "PostgreSQL", level: "Intermediate", icon: <SiPostgresql className="h-5 w-5" />, color: "#4169E1" },
+                          { name: "Drizzle ORM", level: "Intermediate", icon: <Database className="h-5 w-5" />, color: "#C5F74F" },
+                          { name: "RESTful APIs", level: "Advanced", icon: <SiPostman className="h-5 w-5" />, color: "#FF6C37" },
+                          { name: "Authentication", level: "Intermediate", icon: <FaLock className="h-5 w-5" />, color: "#FFB020" }
                         ].map((skill) => (
-                          <div key={skill.name} className="flex items-center gap-3 p-3 rounded-lg border border-border/50 bg-secondary/10 hover:border-primary/30 transition-colors">
-                            {skill.icon}
+                          <div 
+                            key={skill.name} 
+                            style={{ "--brand-color": skill.color } as React.CSSProperties}
+                            className="flex items-center gap-4 p-4 rounded-xl border border-border/50 bg-secondary/5 hover:bg-[var(--brand-color)]/[0.04] hover:border-[var(--brand-color)]/30 transition-all duration-300 group relative overflow-hidden shadow-2xs hover:shadow-xs"
+                          >
+                            <div className="p-2.5 rounded-lg bg-background/80 border border-border/40 group-hover:border-[var(--brand-color)]/20 transition-colors shadow-2xs" style={{ color: skill.color }}>
+                              {skill.icon}
+                            </div>
                             <div>
-                              <div className="text-sm font-semibold">{skill.name}</div>
+                              <div className="text-sm font-semibold tracking-wide text-foreground group-hover:text-[var(--brand-color)] transition-colors">{skill.name}</div>
                               <div className="text-xs text-muted-foreground">{skill.level}</div>
                             </div>
+                            
+                            <div 
+                              className="absolute inset-0 -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                              style={{
+                                background: `radial-gradient(120px at 40px 40px, ${skill.color}15, transparent)`
+                              }}
+                            />
                           </div>
                         ))}
 
                         {skillCategory === "tools" && [
-                          { name: "Git / GitHub", level: "Advanced", icon: <Wrench className="h-4 w-4 text-primary" /> },
-                          { name: "Vite", level: "Advanced", icon: <Wrench className="h-4 w-4 text-primary" /> },
-                          { name: "pnpm", level: "Advanced", icon: <Wrench className="h-4 w-4 text-primary" /> },
-                          { name: "VS Code", level: "Expert", icon: <Wrench className="h-4 w-4 text-primary" /> },
-                          { name: "Command Line", level: "Advanced", icon: <Wrench className="h-4 w-4 text-primary" /> },
-                          { name: "Figma (Design)", level: "Intermediate", icon: <Wrench className="h-4 w-4 text-primary" /> }
+                          { name: "Git / GitHub", level: "Advanced", icon: <div className="flex gap-1.5"><FaGithub className="h-5 w-5" /></div>, color: "#F05032" },
+                          { name: "Vite", level: "Advanced", icon: <SiVite className="h-5 w-5" />, color: "#646CFF" },
+                          { name: "pnpm", level: "Advanced", icon: <SiPnpm className="h-5 w-5" />, color: "#F69220" },
+                          { name: "VS Code", level: "Expert", icon: <VscCode className="h-5 w-5" />, color: "#007ACC" },
+                          { name: "Command Line", level: "Advanced", icon: <FaTerminal className="h-5 w-5" />, color: "#4AF626" },
+                          { name: "Figma (Design)", level: "Intermediate", icon: <FaFigma className="h-5 w-5" />, color: "#F24E1E" }
                         ].map((skill) => (
-                          <div key={skill.name} className="flex items-center gap-3 p-3 rounded-lg border border-border/50 bg-secondary/10 hover:border-primary/30 transition-colors">
-                            {skill.icon}
+                          <div 
+                            key={skill.name} 
+                            style={{ "--brand-color": skill.color } as React.CSSProperties}
+                            className="flex items-center gap-4 p-4 rounded-xl border border-border/50 bg-secondary/5 hover:bg-[var(--brand-color)]/[0.04] hover:border-[var(--brand-color)]/30 transition-all duration-300 group relative overflow-hidden shadow-2xs hover:shadow-xs"
+                          >
+                            <div className="p-2.5 rounded-lg bg-background/80 border border-border/40 group-hover:border-[var(--brand-color)]/20 transition-colors shadow-2xs" style={{ color: skill.color }}>
+                              {skill.icon}
+                            </div>
                             <div>
-                              <div className="text-sm font-semibold">{skill.name}</div>
+                              <div className="text-sm font-semibold tracking-wide text-foreground group-hover:text-[var(--brand-color)] transition-colors">{skill.name}</div>
                               <div className="text-xs text-muted-foreground">{skill.level}</div>
                             </div>
-                          </div>
-                        ))}
-
-                        {skillCategory === "data" && [
-                          { name: "Python", level: "Advanced", icon: <Terminal className="h-4 w-4 text-primary" /> },
-                          { name: "Pandas", level: "Advanced", icon: <Database className="h-4 w-4 text-primary" /> },
-                          { name: "Scikit-Learn", level: "Intermediate", icon: <Brain className="h-4 w-4 text-primary" /> },
-                          { name: "Tableau", level: "Advanced", icon: <BarChart3 className="h-4 w-4 text-primary" /> },
-                          { name: "Power BI", level: "Advanced", icon: <TrendingUp className="h-4 w-4 text-primary" /> },
-                          { name: "Data Analysis", level: "Advanced", icon: <LineChart className="h-4 w-4 text-primary" /> }
-                        ].map((skill) => (
-                          <div key={skill.name} className="flex items-center gap-3 p-3 rounded-lg border border-border/50 bg-secondary/10 hover:border-primary/30 transition-colors">
-                            {skill.icon}
-                            <div>
-                              <div className="text-sm font-semibold">{skill.name}</div>
-                              <div className="text-xs text-muted-foreground">{skill.level}</div>
-                            </div>
+                            
+                            <div 
+                              className="absolute inset-0 -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                              style={{
+                                background: `radial-gradient(120px at 40px 40px, ${skill.color}15, transparent)`
+                              }}
+                            />
                           </div>
                         ))}
                       </div>
@@ -1005,7 +1027,7 @@ src="/Linkdin-pr.jpg"
       <footer className="py-12 border-t border-border/30 bg-secondary/5 font-sans relative z-10">
         <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="text-sm text-muted-foreground font-serif">
-            &copy; {new Date().getFullYear()} Iqra. Crafted with code and intent.
+            &copy; {new Date().getFullYear()} Iqra Shamim. Crafted with code and intent.
           </div>
           <div className="flex gap-6 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
             <a href="#about" className="hover:text-primary transition-colors">About</a>
