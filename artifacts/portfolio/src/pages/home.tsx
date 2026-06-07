@@ -592,25 +592,12 @@ src="/Linkdin-pr.jpg"
                         <div className="relative">
                           <span className="absolute -left-[31px] top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-background border-2 border-primary" />
                           <div className="flex justify-between items-baseline gap-2 mb-1.5 flex-wrap">
-                            <h4 className="text-base font-semibold text-foreground">B.S. in Computer Science</h4>
-                            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-primary/10 text-primary uppercase">2023 - Present</span>
+                            <h4 className="text-base font-semibold text-foreground">B.Tech in Computer Science</h4>
+                            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-primary/10 text-primary uppercase">2023 - 2027</span>
                           </div>
-                          <p className="text-xs text-muted-foreground mb-2">Academic Foundation</p>
+                          <p className="text-xs text-muted-foreground mb-2">Shri Ramswaroop Memorial College of Engineering and Management, Lucknow</p>
                           <p className="text-sm font-serif text-muted-foreground leading-relaxed">
-                            Engaging in computer science curricula covering algorithmic efficiency, database design, software engineering methodologies, and systems security.
-                          </p>
-                        </div>
-
-                        {/* Education Item 2 */}
-                        <div className="relative">
-                          <span className="absolute -left-[31px] top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-background border-2 border-muted-foreground" />
-                          <div className="flex justify-between items-baseline gap-2 mb-1.5 flex-wrap">
-                            <h4 className="text-base font-semibold text-foreground">High School & Intermediate Diploma</h4>
-                            <span className="text-xs text-muted-foreground">2021 - 2023</span>
-                          </div>
-                          <p className="text-xs text-muted-foreground mb-2">Mathematics & Science Track</p>
-                          <p className="text-sm font-serif text-muted-foreground leading-relaxed">
-                            Completed advanced coursework in Calculus, Physics, and introductory computer science fundamentals.
+                            Focusing on core computer science foundations, engineering mathematics, database management, software development principles, and active system design projects.
                           </p>
                         </div>
 
