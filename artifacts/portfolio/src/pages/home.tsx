@@ -749,7 +749,7 @@ src="/Linkdin-pr.jpg"
                 </div>
                 <div className="pt-2">
                   <Button variant="outline" className="rounded-full hover:bg-primary hover:text-primary-foreground group" asChild>
-                    <a href="#">
+                    <a href="https://github.com/Iqras519/aqi_project" target="_blank" rel="noreferrer noopener">
                       View GitHub Repository <ExternalLink className="ml-2 h-4 w-4 group-hover:scale-110 transition-transform" />
                     </a>
                   </Button>
@@ -890,7 +890,7 @@ src="/Linkdin-pr.jpg"
           <span className="text-xs font-semibold tracking-widest uppercase text-primary">Let's Connect</span>
           <h2 className="text-3xl md:text-4xl font-semibold font-serif tracking-tight mt-2 mb-6">Start a conversation.</h2>
           <p className="text-muted-foreground font-serif leading-relaxed mb-10">
-            Have an interesting opportunity or want to collaborate? Submit the form below or email me directly at <a href="mailto:hello@iqra.dev" className="text-primary hover:underline font-sans font-medium">hello@iqra.dev</a>.
+            Have an interesting opportunity or want to collaborate? Submit the form below or email me directly at <a href="mailto:iqrashamim8546@gmail.com" className="text-primary hover:underline font-sans font-medium">iqrashamim8546@gmail.com</a>.
           </p>
 
           <AnimatePresence mode="wait">
