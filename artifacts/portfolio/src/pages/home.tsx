@@ -934,439 +934,11 @@ export default function Home() {
 
           <div className="space-y-28">
             
-            {/* Project 1 (Weather) */}
+            {/* Project 1 (Crop Disease Predictor) */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
               
               {/* Image / Live Widget Container */}
               <div className="lg:col-span-7 order-1">
-                <div className="glass-card rounded-2xl overflow-hidden border border-border/50 shadow-md relative group">
-                  
-                  {/* Browser Frame Header */}
-                  <div className="h-10 border-b border-border/40 flex items-center justify-between px-4 bg-secondary/35">
-                    <div className="flex items-center gap-1.5">
-                      <div className="w-2.5 h-2.5 rounded-full bg-destructive/60" />
-                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-400/60" />
-                      <div className="w-2.5 h-2.5 rounded-full bg-green-400/60" />
-                    </div>
-                    <div className="text-[10px] font-mono tracking-wide text-muted-foreground bg-background/50 px-4 py-0.5 rounded-sm">
-                      weather-aqi.iqra.dev
-                    </div>
-                    <div className="w-10" />
-                  </div>
-
-                  {/* Widget Body */}
-                  <div className="p-6 md:p-8 bg-background/40 min-h-[300px] flex flex-col justify-between">
-                    
-                    {/* Cities Switcher Toggles */}
-                    <div className="flex gap-2 mb-6 border-b border-border/30 pb-4">
-                      {["sf", "tokyo", "london"].map((city) => (
-                        <button
-                          key={city}
-                          onClick={() => setSelectedCity(city as any)}
-                          className={`text-xs px-3 py-1.5 rounded-full transition-all font-medium ${selectedCity === city ? "bg-primary text-primary-foreground font-semibold" : "bg-secondary/30 text-muted-foreground hover:bg-secondary/60 hover:text-foreground"}`}
-                        >
-                          {city === "sf" ? "San Francisco" : city === "tokyo" ? "Tokyo" : "London"}
-                        </button>
-                      ))}
-                    </div>
-
-                    {/* Animated Content Grid */}
-                    <AnimatePresence mode="wait">
-                      <motion.div
-                        key={selectedCity}
-                        initial={{ opacity: 0, y: 5 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -5 }}
-                        transition={{ duration: 0.2 }}
-                        className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center flex-1"
-                      >
-                        {/* Stats Panel */}
-                        <div className="space-y-4">
-                          <div>
-                            <span className="text-xs text-muted-foreground uppercase font-semibold font-sans tracking-wide">Selected Location</span>
-                            <div className="text-xl font-bold font-serif">{weather.label}</div>
-                          </div>
-                          
-                          <div className="flex items-baseline gap-2">
-                            <span className="text-5xl font-black tracking-tighter font-sans">{weather.temp}°F</span>
-                            <span className="text-sm font-serif text-muted-foreground capitalize">{weather.condition}</span>
-                          </div>
-                        </div>
-
-                        {/* AQI Panel */}
-                        <div className="p-4 rounded-xl border border-border/40 bg-secondary/15 flex flex-col justify-between h-full min-h-[120px]">
-                          <div className="flex justify-between items-center">
-                            <div className="flex items-center gap-2">
-                              <Compass className="h-4 w-4 text-primary animate-spin" style={{ animationDuration: "12s" }} />
-                              <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">AQI Status</span>
-                            </div>
-                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${weather.aqi < 50 ? "bg-emerald-500/10 text-emerald-500" : "bg-yellow-500/10 text-yellow-500"}`}>
-                              {weather.desc}
-                            </span>
-                          </div>
-                          
-                          <div className="mt-4">
-                            <div className="text-3xl font-black text-foreground">{weather.aqi}</div>
-                            <div className="w-full bg-border/40 h-2 rounded-full mt-2 overflow-hidden">
-                              <motion.div 
-                                className={`h-full ${weather.aqi < 50 ? "bg-emerald-500" : "bg-yellow-500"}`}
-                                initial={{ width: "0%" }}
-                                animate={{ width: `${Math.min(weather.aqi, 100)}%` }}
-                                transition={{ duration: 0.8, ease: "easeOut" }}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </motion.div>
-                    </AnimatePresence>
-
-                    {/* Footer decoration */}
-                    <div className="flex justify-between items-center border-t border-border/30 pt-4 mt-6 text-xs text-muted-foreground font-serif">
-                      <span className="flex items-center gap-1"><Wind className="h-3 w-3" /> Real-time feed simulated</span>
-                      <span>Chart.js render active</span>
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-
-              {/* Text Description */}
-              <div className="lg:col-span-5 order-2 flex flex-col justify-center space-y-6">
-                <span className="text-xs font-bold uppercase tracking-wider text-primary">Featured Project</span>
-                <h3 className="text-2xl md:text-3xl font-semibold tracking-tight font-serif">Weather & Air Quality dashboard</h3>
-                <p className="text-muted-foreground font-serif leading-relaxed">
-                  A minimal dashboard showcasing local air quality index metrics and real-time weather alerts. Built with the focus of streamlining complex API payload parameters into a clean, typographic reading experience.
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {["React", "OpenWeather API", "CSS variables", "Framer Motion"].map((tag) => (
-                    <span key={tag} className="text-xs bg-secondary/35 px-3 py-1 rounded-full text-muted-foreground border border-border/30">{tag}</span>
-                  ))}
-                </div>
-                <div className="pt-2">
-                  <Button variant="outline" className="rounded-full hover:bg-primary hover:text-primary-foreground group" asChild>
-                    <a href="https://github.com/Iqras519/aqi_project" target="_blank" rel="noreferrer noopener">
-                      View GitHub Repository <ExternalLink className="ml-2 h-4 w-4 group-hover:scale-110 transition-transform" />
-                    </a>
-                  </Button>
-                </div>
-              </div>
-
-            </div>
-
-            {/* Project 2 (Study Tracker / Pomodoro) */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-              
-              {/* Text Description */}
-              <div className="lg:col-span-5 order-2 lg:order-1 flex flex-col justify-center space-y-6">
-                <span className="text-xs font-bold uppercase tracking-wider text-primary">Featured Project</span>
-                <h3 className="text-2xl md:text-3xl font-semibold tracking-tight font-serif">Productivity & Pomodoro Hub</h3>
-                <p className="text-muted-foreground font-serif leading-relaxed">
-                  An interactive task organizer and study timer that helps students maintain deep-focus intervals. Users can customize sessions, checklist key task milestones, and track session logs.
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {["React", "Local Storage", "Framer Motion", "Tailwind CSS"].map((tag) => (
-                    <span key={tag} className="text-xs bg-secondary/35 px-3 py-1 rounded-full text-muted-foreground border border-border/30">{tag}</span>
-                  ))}
-                </div>
-                <div className="pt-2">
-                  <Button variant="outline" className="rounded-full hover:bg-primary hover:text-primary-foreground group" asChild>
-                    <a href="#">
-                      View Live Version <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                    </a>
-                  </Button>
-                </div>
-              </div>
-
-              {/* Image / Live Widget Container */}
-              <div className="lg:col-span-7 order-1 lg:order-2">
-                <div className="glass-card rounded-2xl overflow-hidden border border-border/50 shadow-md relative group">
-                  
-                  {/* Browser Frame Header */}
-                  <div className="h-10 border-b border-border/40 flex items-center justify-between px-4 bg-secondary/35">
-                    <div className="flex items-center gap-1.5">
-                      <div className="w-2.5 h-2.5 rounded-full bg-destructive/60" />
-                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-400/60" />
-                      <div className="w-2.5 h-2.5 rounded-full bg-green-400/60" />
-                    </div>
-                    <div className="text-[10px] font-mono tracking-wide text-muted-foreground bg-background/50 px-4 py-0.5 rounded-sm">
-                      focus-hub.iqra.dev
-                    </div>
-                    <div className="w-10" />
-                  </div>
-
-                  {/* Widget Body */}
-                  <div className="p-6 md:p-8 bg-background/40 min-h-[300px] grid grid-cols-1 md:grid-cols-2 gap-8">
-                    
-                    {/* Left: Pomodoro Timer Widget */}
-                    <div className="flex flex-col justify-between items-center p-4 rounded-xl border border-border/40 bg-background/35 text-center">
-                      <span className="text-[10px] font-bold tracking-widest uppercase text-muted-foreground">Pomodoro Timer</span>
-                      
-                      <div className="my-6">
-                        <div className="text-4xl font-black font-sans tracking-tight tabular-nums">
-                          {formatTime(timeLeft)}
-                        </div>
-                        <span className="text-[10px] text-primary tracking-wide uppercase font-semibold">
-                          {timerRunning ? "Focus Session Active" : "Session Paused"}
-                        </span>
-                      </div>
-
-                      <div className="flex gap-2">
-                        <Button 
-                          size="sm" 
-                          onClick={toggleTimer}
-                          className="rounded-full h-8 px-4"
-                        >
-                          {timerRunning ? <Pause className="h-3 w-3 mr-1" /> : <Play className="h-3 w-3 mr-1" />}
-                          {timerRunning ? "Pause" : "Start"}
-                        </Button>
-                        <Button 
-                          size="sm" 
-                          variant="outline" 
-                          onClick={resetTimer}
-                          className="rounded-full h-8 px-3"
-                        >
-                          <RotateCcw className="h-3 w-3" />
-                        </Button>
-                      </div>
-                    </div>
-
-                    {/* Right: Checklists Tracker */}
-                    <div className="flex flex-col justify-between">
-                      <div className="mb-4">
-                        <div className="flex justify-between items-center text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1.5">
-                          <span>Focus Checklist</span>
-                          <span className="tabular-nums">{progressPercent}%</span>
-                        </div>
-                        <div className="w-full bg-border/30 h-1.5 rounded-full overflow-hidden">
-                          <motion.div 
-                            className="h-full bg-primary"
-                            initial={{ width: "0%" }}
-                            animate={{ width: `${progressPercent}%` }}
-                            transition={{ duration: 0.3 }}
-                          />
-                        </div>
-                      </div>
-
-                      <div className="space-y-2.5 flex-1">
-                        {tasks.map((task) => (
-                          <div 
-                            key={task.id}
-                            onClick={() => toggleTask(task.id)}
-                            className="flex items-center gap-3 p-2 rounded-lg hover:bg-secondary/25 border border-transparent hover:border-border/30 cursor-pointer transition-all"
-                          >
-                            <span className="flex-shrink-0 text-primary">
-                              {task.done ? (
-                                <CheckCircle2 className="h-4 w-4 fill-primary/10" />
-                              ) : (
-                                <div className="h-4 w-4 rounded-full border border-muted-foreground/60 hover:border-primary transition-colors" />
-                              )}
-                            </span>
-                            <span className={`text-xs font-medium transition-all ${task.done ? "line-through text-muted-foreground" : "text-foreground"}`}>
-                              {task.text}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
-            {/* Project 3 (Crypto Tracker) */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-              
-              {/* Image / Live Widget Container */}
-              <div className="lg:col-span-7 order-1">
-                <div className="glass-card rounded-2xl overflow-hidden border border-border/50 shadow-md relative group">
-                  
-                  {/* Browser Frame Header */}
-                  <div className="h-10 border-b border-border/40 flex items-center justify-between px-4 bg-secondary/35">
-                    <div className="flex items-center gap-1.5">
-                      <div className="w-2.5 h-2.5 rounded-full bg-destructive/60" />
-                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-400/60" />
-                      <div className="w-2.5 h-2.5 rounded-full bg-green-400/60" />
-                    </div>
-                    <div className="text-[10px] font-mono tracking-wide text-muted-foreground bg-background/50 px-4 py-0.5 rounded-sm">
-                      crypto-hub.iqra.dev
-                    </div>
-                    <div className="w-10" />
-                  </div>
-
-                  {/* Widget Body */}
-                  <div className="p-6 md:p-8 bg-background/40 min-h-[300px] flex flex-col justify-between">
-                    
-                    {/* Coin Selector Toggles */}
-                    <div className="flex gap-2 mb-6 border-b border-border/30 pb-4">
-                      {["btc", "eth", "sol"].map((coinKey) => (
-                        <button
-                          key={coinKey}
-                          onClick={() => setSelectedCoin(coinKey as any)}
-                          className={`text-xs px-3 py-1.5 rounded-full transition-all font-medium flex items-center gap-1.5 ${selectedCoin === coinKey ? "bg-primary text-primary-foreground font-semibold" : "bg-secondary/30 text-muted-foreground hover:bg-secondary/60 hover:text-foreground"}`}
-                        >
-                          <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: cryptoData[coinKey].color }} />
-                          {cryptoData[coinKey].name}
-                        </button>
-                      ))}
-                    </div>
-
-                    {/* Content Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center flex-1">
-                      
-                      {/* Left Side: Stats and Chart */}
-                      <div className="space-y-4">
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <span className="text-[10px] text-muted-foreground uppercase font-semibold tracking-wide">Live Price</span>
-                            <div className="text-2xl font-black font-sans tracking-tight">${activeCoin.price.toLocaleString()}</div>
-                          </div>
-                          <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center gap-0.5">
-                            <ArrowUpRight className="h-3 w-3" />
-                            {activeCoin.change}%
-                          </span>
-                        </div>
-
-                        {/* Interactive Dynamic SVG Area Chart */}
-                        <div className="py-2">
-                          {(() => {
-                            const trend = activeCoin.trend;
-                            const min = Math.min(...trend);
-                            const max = Math.max(...trend);
-                            const range = max - min || 1;
-                            const points = trend.map((val, index) => {
-                              const x = (index / (trend.length - 1)) * 260 + 20;
-                              const y = 80 - ((val - min) / range) * 60;
-                              return { x, y };
-                            });
-
-                            const linePath = `M ${points.map(p => `${p.x} ${p.y}`).join(" L ")}`;
-                            const areaPath = `${linePath} L ${points[points.length - 1].x} 90 L ${points[0].x} 90 Z`;
-
-                            return (
-                              <svg className="w-full h-24 overflow-visible" viewBox="0 0 300 100">
-                                <defs>
-                                  <linearGradient id={`gradient-${selectedCoin}`} x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="0%" stopColor={activeCoin.color} stopOpacity={0.2} />
-                                    <stop offset="100%" stopColor={activeCoin.color} stopOpacity={0.0} />
-                                  </linearGradient>
-                                </defs>
-                                <path d={areaPath} fill={`url(#gradient-${selectedCoin})`} />
-                                <path d={linePath} fill="none" stroke={activeCoin.color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                                {points.map((p, i) => (
-                                  <circle key={i} cx={p.x} cy={p.y} r="3.5" className="fill-background stroke-current" style={{ color: activeCoin.color }} strokeWidth="1.5" />
-                                ))}
-                              </svg>
-                            );
-                          })()}
-                        </div>
-                      </div>
-
-                      {/* Right Side: Wallet Holdings Simulation */}
-                      <div className="p-4 rounded-xl border border-border/40 bg-secondary/15 flex flex-col justify-between h-full min-h-[140px] space-y-4">
-                        <div className="flex justify-between items-center">
-                          <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide flex items-center gap-1.5">
-                            <Wallet className="h-3.5 w-3.5 text-primary" />
-                            Mock Wallet
-                          </span>
-                          <span className="text-xs font-bold tabular-nums text-foreground">
-                            USD: ${cryptoBalance.toLocaleString()}
-                          </span>
-                        </div>
-
-                        <div>
-                          <div className="text-[10px] text-muted-foreground uppercase font-semibold tracking-wide">Your Holdings</div>
-                          <div className="flex justify-between items-baseline mt-1">
-                            <span className="text-lg font-black font-sans text-foreground tabular-nums">
-                              {cryptoHoldings[selectedCoin].toFixed(4)} {activeCoin.symbol}
-                            </span>
-                            <span className="text-xs text-muted-foreground tabular-nums">
-                              ≈ ${(cryptoHoldings[selectedCoin] * activeCoin.price).toLocaleString(undefined, { maximumFractionDigits: 2 })}
-                            </span>
-                          </div>
-                        </div>
-
-                        <div className="flex gap-2">
-                          <Button 
-                            size="sm" 
-                            onClick={() => handleCryptoTrade("buy")}
-                            className="flex-1 rounded-full text-xs h-8"
-                          >
-                            Buy $500
-                          </Button>
-                          <Button 
-                            size="sm" 
-                            variant="outline"
-                            onClick={() => handleCryptoTrade("sell")}
-                            className="flex-1 rounded-full text-xs h-8"
-                          >
-                            Sell $500
-                          </Button>
-                        </div>
-                      </div>
-
-                    </div>
-
-                    {/* Footer decoration */}
-                    <div className="flex justify-between items-center border-t border-border/30 pt-4 mt-6 text-xs text-muted-foreground font-serif">
-                      <span className="flex items-center gap-1"><TrendingUp className="h-3 w-3" /> Interactive balance simulation</span>
-                      <span>Real-time price feed mockup</span>
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-
-              {/* Text Description */}
-              <div className="lg:col-span-5 order-2 flex flex-col justify-center space-y-6">
-                <span className="text-xs font-bold uppercase tracking-wider text-primary">Featured Project</span>
-                <h3 className="text-2xl md:text-3xl font-semibold tracking-tight font-serif">Crypto Holdings & Market Analytics</h3>
-                <p className="text-muted-foreground font-serif leading-relaxed">
-                  A cryptocurrency dashboard and wallet simulator. Built to demonstrate live SVG vector chart plotting, dynamic mock portfolio updates, and stateful wallet transactions with custom validation systems.
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {["React", "SVG Rendering", "Lucide Icons", "Tailwind CSS"].map((tag) => (
-                    <span key={tag} className="text-xs bg-secondary/35 px-3 py-1 rounded-full text-muted-foreground border border-border/30">{tag}</span>
-                  ))}
-                </div>
-                <div className="pt-2">
-                  <Button variant="outline" className="rounded-full hover:bg-primary hover:text-primary-foreground group" asChild>
-                    <a href="https://github.com/Iqras519/crypto-holdings" target="_blank" rel="noreferrer noopener">
-                      View GitHub Repository <ExternalLink className="ml-2 h-4 w-4 group-hover:scale-110 transition-transform" />
-                    </a>
-                  </Button>
-                </div>
-              </div>
-
-            </div>
-
-            {/* Project 4 (Crop Disease Predictor) */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-              
-              {/* Text Description */}
-              <div className="lg:col-span-5 order-2 lg:order-1 flex flex-col justify-center space-y-6">
-                <span className="text-xs font-bold uppercase tracking-wider text-primary">Featured ML & Computer Vision Project</span>
-                <h3 className="text-2xl md:text-3xl font-semibold tracking-tight font-serif">AgroShield AI: Crop Disease Predictor</h3>
-                <p className="text-muted-foreground font-serif leading-relaxed">
-                  An end-to-end plant pathology diagnostics tool. It simulates crop leaf disease detection using a ResNet-based Convolutional Neural Network (CNN) and Computer Vision contour maps. Users can load standard crop leaf samples (Tomato, Potato, Corn, Wheat) or upload their own images to extract CV edge maps, trigger attention heatmaps (Grad-CAM), and receive detailed machine learning-powered treatment recommendations.
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {["CNN (ResNet-50)", "Grad-CAM Heatmaps", "OpenCV Contours", "React"].map((tag) => (
-                    <span key={tag} className="text-xs bg-secondary/35 px-3 py-1 rounded-full text-muted-foreground border border-border/30">{tag}</span>
-                  ))}
-                </div>
-                <div className="pt-2">
-                  <Button variant="outline" className="rounded-full hover:bg-primary hover:text-primary-foreground group" asChild>
-                    <a href="https://github.com/Iqras519/agroshield-ai" target="_blank" rel="noreferrer noopener">
-                      View GitHub Repository <ExternalLink className="ml-2 h-4 w-4 group-hover:scale-110 transition-transform" />
-                    </a>
-                  </Button>
-                </div>
-              </div>
-
-              {/* Image / Live Widget Container */}
-              <div className="lg:col-span-7 order-1 lg:order-2">
                 <div className="glass-card rounded-2xl overflow-hidden border border-border/50 shadow-md relative group">
                   
                   {/* Browser Frame Header */}
@@ -1850,8 +1422,435 @@ export default function Home() {
                 </div>
               </div>
 
+              {/* Text Description */}
+              <div className="lg:col-span-5 flex flex-col justify-center space-y-6">
+                <span className="text-xs font-bold uppercase tracking-wider text-primary">Featured ML & Computer Vision Project</span>
+                <h3 className="text-2xl md:text-3xl font-semibold tracking-tight font-serif">AgroShield AI: Crop Disease Predictor</h3>
+                <p className="text-muted-foreground font-serif leading-relaxed">
+                  An end-to-end plant pathology diagnostics tool. It simulates crop leaf disease detection using a ResNet-based Convolutional Neural Network (CNN) and Computer Vision contour maps. Users can load standard crop leaf samples (Tomato, Potato, Corn, Wheat) or upload their own images to extract CV edge maps, trigger attention heatmaps (Grad-CAM), and receive detailed machine learning-powered treatment recommendations.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {["CNN (ResNet-50)", "Grad-CAM Heatmaps", "OpenCV Contours", "React"].map((tag) => (
+                    <span key={tag} className="text-xs bg-secondary/35 px-3 py-1 rounded-full text-muted-foreground border border-border/30">{tag}</span>
+                  ))}
+                </div>
+                <div className="pt-2">
+                  <Button variant="outline" className="rounded-full hover:bg-primary hover:text-primary-foreground group" asChild>
+                    <a href="https://github.com/Iqras519/agroshield-ai" target="_blank" rel="noreferrer noopener">
+                      View GitHub Repository <ExternalLink className="ml-2 h-4 w-4 group-hover:scale-110 transition-transform" />
+                    </a>
+                  </Button>
+                </div>
+              </div>
+
             </div>
 
+            {/* Project 2 (Weather & AQI Dashboard) */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+              
+              {/* Text Description */}
+              <div className="lg:col-span-5 order-2 lg:order-1 flex flex-col justify-center space-y-6">
+                <span className="text-xs font-bold uppercase tracking-wider text-primary">Featured Project</span>
+                <h3 className="text-2xl md:text-3xl font-semibold tracking-tight font-serif">Weather & Air Quality dashboard</h3>
+                <p className="text-muted-foreground font-serif leading-relaxed">
+                  A minimal dashboard showcasing local air quality index metrics and real-time weather alerts. Built with the focus of streamlining complex API payload parameters into a clean, typographic reading experience.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {["React", "OpenWeather API", "CSS variables", "Framer Motion"].map((tag) => (
+                    <span key={tag} className="text-xs bg-secondary/35 px-3 py-1 rounded-full text-muted-foreground border border-border/30">{tag}</span>
+                  ))}
+                </div>
+                <div className="pt-2">
+                  <Button variant="outline" className="rounded-full hover:bg-primary hover:text-primary-foreground group" asChild>
+                    <a href="https://github.com/Iqras519/aqi_project" target="_blank" rel="noreferrer noopener">
+                      View GitHub Repository <ExternalLink className="ml-2 h-4 w-4 group-hover:scale-110 transition-transform" />
+                    </a>
+                  </Button>
+                </div>
+              </div>
+
+              {/* Image / Live Widget Container */}
+              <div className="lg:col-span-7 order-1 lg:order-2">
+                <div className="glass-card rounded-2xl overflow-hidden border border-border/50 shadow-md relative group">
+                  
+                  {/* Browser Frame Header */}
+                  <div className="h-10 border-b border-border/40 flex items-center justify-between px-4 bg-secondary/35">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-2.5 h-2.5 rounded-full bg-destructive/60" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-400/60" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-green-400/60" />
+                    </div>
+                    <div className="text-[10px] font-mono tracking-wide text-muted-foreground bg-background/50 px-4 py-0.5 rounded-sm">
+                      weather-aqi.iqra.dev
+                    </div>
+                    <div className="w-10" />
+                  </div>
+
+                  {/* Widget Body */}
+                  <div className="p-6 md:p-8 bg-background/40 min-h-[300px] flex flex-col justify-between">
+                    
+                    {/* Cities Switcher Toggles */}
+                    <div className="flex gap-2 mb-6 border-b border-border/30 pb-4">
+                      {["sf", "tokyo", "london"].map((city) => (
+                        <button
+                          key={city}
+                          onClick={() => setSelectedCity(city as any)}
+                          className={`text-xs px-3 py-1.5 rounded-full transition-all font-medium ${selectedCity === city ? "bg-primary text-primary-foreground font-semibold" : "bg-secondary/30 text-muted-foreground hover:bg-secondary/60 hover:text-foreground"}`}
+                        >
+                          {city === "sf" ? "San Francisco" : city === "tokyo" ? "Tokyo" : "London"}
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* Animated Content Grid */}
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={selectedCity}
+                        initial={{ opacity: 0, y: 5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -5 }}
+                        transition={{ duration: 0.2 }}
+                        className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center flex-1"
+                      >
+                        {/* Stats Panel */}
+                        <div className="space-y-4">
+                          <div>
+                            <span className="text-xs text-muted-foreground uppercase font-semibold font-sans tracking-wide">Selected Location</span>
+                            <div className="text-xl font-bold font-serif">{weather.label}</div>
+                          </div>
+                          
+                          <div className="flex items-baseline gap-2">
+                            <span className="text-5xl font-black tracking-tighter font-sans">{weather.temp}°F</span>
+                            <span className="text-sm font-serif text-muted-foreground capitalize">{weather.condition}</span>
+                          </div>
+                        </div>
+
+                        {/* AQI Panel */}
+                        <div className="p-4 rounded-xl border border-border/40 bg-secondary/15 flex flex-col justify-between h-full min-h-[120px]">
+                          <div className="flex justify-between items-center">
+                            <div className="flex items-center gap-2">
+                              <Compass className="h-4 w-4 text-primary animate-spin" style={{ animationDuration: "12s" }} />
+                              <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">AQI Status</span>
+                            </div>
+                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${weather.aqi < 50 ? "bg-emerald-500/10 text-emerald-500" : "bg-yellow-500/10 text-yellow-500"}`}>
+                              {weather.desc}
+                            </span>
+                          </div>
+                          
+                          <div className="mt-4">
+                            <div className="text-3xl font-black text-foreground">{weather.aqi}</div>
+                            <div className="w-full bg-border/40 h-2 rounded-full mt-2 overflow-hidden">
+                              <motion.div 
+                                className={`h-full ${weather.aqi < 50 ? "bg-emerald-500" : "bg-yellow-500"}`}
+                                initial={{ width: "0%" }}
+                                animate={{ width: `${Math.min(weather.aqi, 100)}%` }}
+                                transition={{ duration: 0.8, ease: "easeOut" }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </motion.div>
+                    </AnimatePresence>
+
+                    {/* Footer decoration */}
+                    <div className="flex justify-between items-center border-t border-border/30 pt-4 mt-6 text-xs text-muted-foreground font-serif">
+                      <span className="flex items-center gap-1"><Wind className="h-3 w-3" /> Real-time feed simulated</span>
+                      <span>Chart.js render active</span>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Project 3 (Crypto Tracker) */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+              
+              {/* Image / Live Widget Container */}
+              <div className="lg:col-span-7">
+                <div className="glass-card rounded-2xl overflow-hidden border border-border/50 shadow-md relative group">
+                  
+                  {/* Browser Frame Header */}
+                  <div className="h-10 border-b border-border/40 flex items-center justify-between px-4 bg-secondary/35">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-2.5 h-2.5 rounded-full bg-destructive/60" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-400/60" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-green-400/60" />
+                    </div>
+                    <div className="text-[10px] font-mono tracking-wide text-muted-foreground bg-background/50 px-4 py-0.5 rounded-sm">
+                      crypto-hub.iqra.dev
+                    </div>
+                    <div className="w-10" />
+                  </div>
+
+                  {/* Widget Body */}
+                  <div className="p-6 md:p-8 bg-background/40 min-h-[300px] flex flex-col justify-between">
+                    
+                    {/* Coin Selector Toggles */}
+                    <div className="flex gap-2 mb-6 border-b border-border/30 pb-4">
+                      {["btc", "eth", "sol"].map((coinKey) => (
+                        <button
+                          key={coinKey}
+                          onClick={() => setSelectedCoin(coinKey as any)}
+                          className={`text-xs px-3 py-1.5 rounded-full transition-all font-medium flex items-center gap-1.5 ${selectedCoin === coinKey ? "bg-primary text-primary-foreground font-semibold" : "bg-secondary/30 text-muted-foreground hover:bg-secondary/60 hover:text-foreground"}`}
+                        >
+                          <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: cryptoData[coinKey].color }} />
+                          {cryptoData[coinKey].name}
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* Content Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center flex-1">
+                      
+                      {/* Left Side: Stats and Chart */}
+                      <div className="space-y-4">
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <span className="text-[10px] text-muted-foreground uppercase font-semibold tracking-wide">Live Price</span>
+                            <div className="text-2xl font-black font-sans tracking-tight">${activeCoin.price.toLocaleString()}</div>
+                          </div>
+                          <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center gap-0.5">
+                            <ArrowUpRight className="h-3 w-3" />
+                            {activeCoin.change}%
+                          </span>
+                        </div>
+
+                        {/* Interactive Dynamic SVG Area Chart */}
+                        <div className="py-2">
+                          {(() => {
+                            const trend = activeCoin.trend;
+                            const min = Math.min(...trend);
+                            const max = Math.max(...trend);
+                            const range = max - min || 1;
+                            const points = trend.map((val, index) => {
+                              const x = (index / (trend.length - 1)) * 260 + 20;
+                              const y = 80 - ((val - min) / range) * 60;
+                              return { x, y };
+                            });
+
+                            const linePath = `M ${points.map(p => `${p.x} ${p.y}`).join(" L ")}`;
+                            const areaPath = `${linePath} L ${points[points.length - 1].x} 90 L ${points[0].x} 90 Z`;
+
+                            return (
+                              <svg className="w-full h-24 overflow-visible" viewBox="0 0 300 100">
+                                <defs>
+                                  <linearGradient id={`gradient-${selectedCoin}`} x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stopColor={activeCoin.color} stopOpacity="0.2" />
+                                    <stop offset="100%" stopColor={activeCoin.color} stopOpacity="0.0" />
+                                  </linearGradient>
+                                </defs>
+                                <path d={areaPath} fill={`url(#gradient-${selectedCoin})`} />
+                                <path d={linePath} fill="none" stroke={activeCoin.color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                                {points.map((p, i) => (
+                                  <circle key={i} cx={p.x} cy={p.y} r="3.5" className="fill-background stroke-current" style={{ color: activeCoin.color }} strokeWidth="1.5" />
+                                ))}
+                              </svg>
+                            );
+                          })()}
+                        </div>
+                      </div>
+
+                      {/* Right Side: Wallet Holdings Simulation */}
+                      <div className="p-4 rounded-xl border border-border/40 bg-secondary/15 flex flex-col justify-between h-full min-h-[140px] space-y-4">
+                        <div className="flex justify-between items-center">
+                          <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide flex items-center gap-1.5">
+                            <Wallet className="h-3.5 w-3.5 text-primary" />
+                            Mock Wallet
+                          </span>
+                          <span className="text-xs font-bold tabular-nums text-foreground">
+                            USD: ${cryptoBalance.toLocaleString()}
+                          </span>
+                        </div>
+
+                        <div>
+                          <div className="text-[10px] text-muted-foreground uppercase font-semibold tracking-wide">Your Holdings</div>
+                          <div className="flex justify-between items-baseline mt-1">
+                            <span className="text-lg font-black font-sans text-foreground tabular-nums">
+                              {cryptoHoldings[selectedCoin].toFixed(4)} {activeCoin.symbol}
+                            </span>
+                            <span className="text-xs text-muted-foreground tabular-nums">
+                              ≈ ${(cryptoHoldings[selectedCoin] * activeCoin.price).toLocaleString(undefined, { maximumFractionDigits: 2 })}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="flex gap-2">
+                          <Button 
+                            size="sm" 
+                            onClick={() => handleCryptoTrade("buy")}
+                            className="flex-1 rounded-full text-xs h-8"
+                          >
+                            Buy $500
+                          </Button>
+                          <Button 
+                            size="sm" 
+                            variant="outline"
+                            onClick={() => handleCryptoTrade("sell")}
+                            className="flex-1 rounded-full text-xs h-8"
+                          >
+                            Sell $500
+                          </Button>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    {/* Footer decoration */}
+                    <div className="flex justify-between items-center border-t border-border/30 pt-4 mt-6 text-xs text-muted-foreground font-serif">
+                      <span className="flex items-center gap-1"><TrendingUp className="h-3 w-3" /> Interactive balance simulation</span>
+                      <span>Real-time price feed mockup</span>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              {/* Text Description */}
+              <div className="lg:col-span-5 flex flex-col justify-center space-y-6">
+                <span className="text-xs font-bold uppercase tracking-wider text-primary">Featured Project</span>
+                <h3 className="text-2xl md:text-3xl font-semibold tracking-tight font-serif">Crypto Holdings & Market Analytics</h3>
+                <p className="text-muted-foreground font-serif leading-relaxed">
+                  A cryptocurrency dashboard and wallet simulator. Built to demonstrate live SVG vector chart plotting, dynamic mock portfolio updates, and stateful wallet transactions with custom validation systems.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {["React", "SVG Rendering", "Lucide Icons", "Tailwind CSS"].map((tag) => (
+                    <span key={tag} className="text-xs bg-secondary/35 px-3 py-1 rounded-full text-muted-foreground border border-border/30">{tag}</span>
+                  ))}
+                </div>
+                <div className="pt-2">
+                  <Button variant="outline" className="rounded-full hover:bg-primary hover:text-primary-foreground group" asChild>
+                    <a href="https://github.com/Iqras519/crypto-holdings" target="_blank" rel="noreferrer noopener">
+                      View GitHub Repository <ExternalLink className="ml-2 h-4 w-4 group-hover:scale-110 transition-transform" />
+                    </a>
+                  </Button>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Project 4 (Study Tracker / Pomodoro) */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+              
+              {/* Text Description */}
+              <div className="lg:col-span-5 order-2 lg:order-1 flex flex-col justify-center space-y-6">
+                <span className="text-xs font-bold uppercase tracking-wider text-primary">Featured Project</span>
+                <h3 className="text-2xl md:text-3xl font-semibold tracking-tight font-serif">Productivity & Pomodoro Hub</h3>
+                <p className="text-muted-foreground font-serif leading-relaxed">
+                  An interactive task organizer and study timer that helps students maintain deep-focus intervals. Users can customize sessions, checklist key task milestones, and track session logs.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {["React", "Local Storage", "Framer Motion", "Tailwind CSS"].map((tag) => (
+                    <span key={tag} className="text-xs bg-secondary/35 px-3 py-1 rounded-full text-muted-foreground border border-border/30">{tag}</span>
+                  ))}
+                </div>
+                <div className="pt-2">
+                  <Button variant="outline" className="rounded-full hover:bg-primary hover:text-primary-foreground group" asChild>
+                    <a href="#">
+                      View Live Version <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    </a>
+                  </Button>
+                </div>
+              </div>
+
+              {/* Image / Live Widget Container */}
+              <div className="lg:col-span-7 order-1 lg:order-2">
+                <div className="glass-card rounded-2xl overflow-hidden border border-border/50 shadow-md relative group">
+                  
+                  {/* Browser Frame Header */}
+                  <div className="h-10 border-b border-border/40 flex items-center justify-between px-4 bg-secondary/35">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-2.5 h-2.5 rounded-full bg-destructive/60" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-400/60" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-green-400/60" />
+                    </div>
+                    <div className="text-[10px] font-mono tracking-wide text-muted-foreground bg-background/50 px-4 py-0.5 rounded-sm">
+                      focus-hub.iqra.dev
+                    </div>
+                    <div className="w-10" />
+                  </div>
+
+                  {/* Widget Body */}
+                  <div className="p-6 md:p-8 bg-background/40 min-h-[300px] grid grid-cols-1 md:grid-cols-2 gap-8">
+                    
+                    {/* Left: Pomodoro Timer Widget */}
+                    <div className="flex flex-col justify-between items-center p-4 rounded-xl border border-border/40 bg-background/35 text-center">
+                      <span className="text-[10px] font-bold tracking-widest uppercase text-muted-foreground">Pomodoro Timer</span>
+                      
+                      <div className="my-6">
+                        <div className="text-4xl font-black font-sans tracking-tight tabular-nums">
+                          {formatTime(timeLeft)}
+                        </div>
+                        <span className="text-[10px] text-primary tracking-wide uppercase font-semibold">
+                          {timerRunning ? "Focus Session Active" : "Session Paused"}
+                        </span>
+                      </div>
+
+                      <div className="flex gap-2">
+                        <Button 
+                          size="sm" 
+                          onClick={toggleTimer}
+                          className="rounded-full h-8 px-4"
+                        >
+                          {timerRunning ? <Pause className="h-3 w-3 mr-1" /> : <Play className="h-3 w-3 mr-1" />}
+                          {timerRunning ? "Pause" : "Start"}
+                        </Button>
+                        <Button 
+                          size="sm" 
+                          variant="outline" 
+                          onClick={resetTimer}
+                          className="rounded-full h-8 px-3"
+                        >
+                          <RotateCcw className="h-3 w-3" />
+                        </Button>
+                      </div>
+                    </div>
+
+                    {/* Right: Checklists Tracker */}
+                    <div className="flex flex-col justify-between">
+                      <div className="mb-4">
+                        <div className="flex justify-between items-center text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1.5">
+                          <span>Focus Checklist</span>
+                          <span className="tabular-nums">{progressPercent}%</span>
+                        </div>
+                        <div className="w-full bg-border/30 h-1.5 rounded-full overflow-hidden">
+                          <motion.div 
+                            className="h-full bg-primary"
+                            initial={{ width: "0%" }}
+                            animate={{ width: `${progressPercent}%` }}
+                            transition={{ duration: 0.3 }}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="space-y-2.5 flex-1">
+                        {tasks.map((task) => (
+                          <div 
+                            key={task.id}
+                            onClick={() => toggleTask(task.id)}
+                            className="flex items-center gap-3 p-2 rounded-lg hover:bg-secondary/25 border border-transparent hover:border-border/30 cursor-pointer transition-all"
+                          >
+                            <span className="flex-shrink-0 text-primary">
+                              {task.done ? (
+                                <CheckCircle2 className="h-4 w-4 fill-primary/10" />
+                              ) : (
+                                <div className="h-4 w-4 rounded-full border border-muted-foreground/60 hover:border-primary transition-colors" />
+                              )}
+                            </span>
+                            <span className={`text-xs font-medium transition-all ${task.done ? "line-through text-muted-foreground" : "text-foreground"}`}>
+                              {task.text}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
       </section>
