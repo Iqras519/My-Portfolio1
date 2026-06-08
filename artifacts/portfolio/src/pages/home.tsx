@@ -39,7 +39,8 @@ import {
   Layers,
   Upload,
   Leaf,
-  ShieldAlert
+  ShieldAlert,
+  Award
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -213,6 +214,40 @@ const cropDataRecords: Record<string, CropDetail> = {
   }
 };
 
+interface Certificate {
+  title: string;
+  subtitle: string;
+  issuer: string;
+  date: string;
+  credentialId: string;
+  image: string;
+  verifyUrl: string | null;
+  details: string;
+}
+
+const certificates: Certificate[] = [
+  {
+    title: "Smart India Hackathon 2024",
+    subtitle: "Grand Finale Participation (Software Edition)",
+    issuer: "Ministry of Education & MoE's Innovation Cell, Gov of India",
+    date: "Dec 11-12, 2024",
+    credentialId: "NITK Surathkal Grand Finale",
+    image: "/sih_certificate.jpg",
+    verifyUrl: null,
+    details: "Represented the institution at the national-level grand finale of Smart India Hackathon 2024 (Software Edition), developing full-stack solutions for critical ministry challenges under rigid timeline constraints."
+  },
+  {
+    title: "Python 101 for Data Science",
+    subtitle: "IBM Developer Skills Network (PY0101EN)",
+    issuer: "IBM SkillsBuild & Cognitive Class",
+    date: "April 3, 2025",
+    credentialId: "99d5b556714d47189871df95720a0256",
+    image: "/ibm_certificate.jpg",
+    verifyUrl: "https://courses.yl-ptech.skillsnetwork.site/certificates/99d5b556714d47189871df95720a0256",
+    details: "Successfully completed Python programming fundamentals, data structures, dynamic data manipulation using libraries like Pandas and NumPy, and data science file processing operations."
+  }
+];
+
 // Animation variants
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -248,8 +283,11 @@ export default function Home() {
   // Mouse cursor spotlight pos
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   
-  // Active category in Skills/Experience/Education tabs
-  const [activeTab, setActiveTab] = useState<"skills" | "experience" | "education">("skills");
+  // Active category in Skills/Experience/Education/Certificates tabs
+  const [activeTab, setActiveTab] = useState<"skills" | "experience" | "education" | "certificates">("skills");
+  
+  // Selected certificate for lightbox modal
+  const [selectedCertificateImage, setSelectedCertificateImage] = useState<string | null>(null);
   
   // Active skills category
   const [skillCategory, setSkillCategory] = useState<"frontend" | "backend" | "tools">("frontend");
@@ -687,7 +725,7 @@ export default function Home() {
             {/* Right Side: Tab Switcher (Skills vs Experience) */}
             <div className="lg:col-span-7">
               {/* Tab Selector */}
-              <div className="flex border-b border-border/60 mb-8 p-1 bg-secondary/15 rounded-lg max-w-[360px]">
+              <div className="flex border-b border-border/60 mb-8 p-1 bg-secondary/15 rounded-lg max-w-[480px]">
                 <button
                   onClick={() => setActiveTab("skills")}
                   className={`flex-1 py-2 text-sm font-medium rounded-md transition-all relative ${activeTab === "skills" ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
@@ -718,6 +756,18 @@ export default function Home() {
                 >
                   Education
                   {activeTab === "education" && (
+                    <motion.div 
+                      layoutId="activeTabGlow"
+                      className="absolute inset-0 bg-background rounded-md shadow-xs border border-border/40 z-[-1]"
+                    />
+                  )}
+                </button>
+                <button
+                  onClick={() => setActiveTab("certificates")}
+                  className={`flex-1 py-2 text-sm font-medium rounded-md transition-all relative ${activeTab === "certificates" ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
+                >
+                  Certificates
+                  {activeTab === "certificates" && (
                     <motion.div 
                       layoutId="activeTabGlow"
                       className="absolute inset-0 bg-background rounded-md shadow-xs border border-border/40 z-[-1]"
@@ -884,7 +934,7 @@ export default function Home() {
 
                       </div>
                     </motion.div>
-                  ) : (
+                  ) : activeTab === "education" ? (
                     <motion.div
                       key="education-tab"
                       initial={{ opacity: 0, y: 10 }}
@@ -909,6 +959,73 @@ export default function Home() {
                           </p>
                         </div>
 
+                      </div>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="certificates-tab"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.2 }}
+                      className="space-y-6"
+                    >
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {certificates.map((cert) => (
+                          <div 
+                            key={cert.title}
+                            className="glass-card rounded-2xl overflow-hidden border border-border/50 bg-secondary/5 hover:bg-secondary/10 hover:border-primary/30 transition-all duration-300 flex flex-col justify-between group h-full shadow-2xs hover:shadow-xs p-5"
+                          >
+                            <div className="space-y-4">
+                              {/* Certificate Header */}
+                              <div className="flex justify-between items-start">
+                                <div className="p-2.5 rounded-lg bg-background/80 border border-border/40 text-primary shadow-2xs">
+                                  <Award className="h-5 w-5" />
+                                </div>
+                                <span className="text-[10px] font-mono tracking-wide text-muted-foreground bg-background/50 px-2 py-0.5 rounded-sm">
+                                  {cert.date}
+                                </span>
+                              </div>
+
+                              {/* Title & Details */}
+                              <div className="space-y-1">
+                                <h4 className="text-base font-bold text-foreground leading-tight tracking-tight group-hover:text-primary transition-colors">{cert.title}</h4>
+                                <p className="text-xs font-semibold text-primary/80">{cert.subtitle}</p>
+                                <p className="text-xs text-muted-foreground font-medium">{cert.issuer}</p>
+                              </div>
+
+                              <p className="text-xs font-serif text-muted-foreground leading-relaxed">{cert.details}</p>
+                            </div>
+
+                            {/* Actions / Info */}
+                            <div className="pt-4 border-t border-border/30 mt-4 flex items-center justify-between gap-3">
+                              <span className="text-[9px] font-mono text-muted-foreground truncate max-w-[150px]" title={cert.credentialId}>
+                                ID: {cert.credentialId}
+                              </span>
+                              <div className="flex gap-2">
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  onClick={() => setSelectedCertificateImage(cert.image)}
+                                  className="h-8 rounded-full text-xs px-3 hover:bg-secondary"
+                                >
+                                  View Copy
+                                </Button>
+                                {cert.verifyUrl && (
+                                  <Button
+                                    size="sm"
+                                    asChild
+                                    className="h-8 rounded-full text-xs px-3"
+                                  >
+                                    <a href={cert.verifyUrl} target="_blank" rel="noreferrer noopener">
+                                      Verify <ExternalLink className="h-3 w-3 ml-1" />
+                                    </a>
+                                  </Button>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        ))}
                       </div>
                     </motion.div>
                   )}
@@ -1976,6 +2093,41 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* Certificate Lightbox Modal */}
+      <AnimatePresence>
+        {selectedCertificateImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedCertificateImage(null)}
+            className="fixed inset-0 bg-black/60 dark:bg-black/80 backdrop-blur-md z-[100] flex items-center justify-center p-4 cursor-zoom-out"
+          >
+            <motion.div
+              initial={{ scale: 0.95, y: 15 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.95, y: 15 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-4xl w-full max-h-[90vh] bg-card rounded-2xl overflow-hidden border border-border/80 shadow-2xl flex flex-col items-center justify-center p-2"
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setSelectedCertificateImage(null)}
+                className="absolute top-4 right-4 p-2 rounded-full bg-background/80 hover:bg-secondary border border-border text-foreground transition-all duration-200 z-50 shadow-sm cursor-pointer"
+              >
+                <X className="h-4 w-4" />
+              </button>
+
+              <img
+                src={selectedCertificateImage}
+                alt="Certificate preview"
+                className="max-w-full max-h-[85vh] object-contain rounded-xl"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </div>
   );
