@@ -29,7 +29,17 @@ import {
   Compass,
   Wind,
   Check,
-  ChevronRight
+  ChevronRight,
+  Wallet,
+  TrendingUp,
+  ArrowUpRight,
+  Camera,
+  Cpu,
+  Eye,
+  Layers,
+  Upload,
+  Leaf,
+  ShieldAlert
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -63,6 +73,144 @@ const weatherData: Record<string, CityWeather> = {
   sf: { temp: 72, aqi: 45, condition: "Sunny", label: "San Francisco, CA", desc: "Good", icon: "sunny" },
   tokyo: { temp: 64, aqi: 85, condition: "Cloudy", label: "Tokyo, Japan", desc: "Moderate", icon: "cloudy" },
   london: { temp: 58, aqi: 28, condition: "Rainy", label: "London, UK", desc: "Good", icon: "rainy" }
+};
+
+interface CoinData {
+  name: string;
+  symbol: string;
+  price: number;
+  change: number;
+  color: string;
+  trend: number[];
+}
+
+const cryptoData: Record<string, CoinData> = {
+  btc: {
+    name: "Bitcoin",
+    symbol: "BTC",
+    price: 65240,
+    change: 4.85,
+    color: "#F7931A",
+    trend: [61200, 62500, 61800, 63400, 64200, 63800, 65240]
+  },
+  eth: {
+    name: "Ethereum",
+    symbol: "ETH",
+    price: 3420,
+    change: 3.12,
+    color: "#627EEA",
+    trend: [3150, 3210, 3080, 3290, 3250, 3310, 3420]
+  },
+  sol: {
+    name: "Solana",
+    symbol: "SOL",
+    price: 168.5,
+    change: 8.42,
+    color: "#14F195",
+    trend: [142, 149, 145, 158, 162, 155, 168.5]
+  }
+};
+
+interface Recommendation {
+  chemical: string[];
+  organic: string[];
+  cultural: string[];
+}
+
+interface CropDetail {
+  name: string;
+  scientificName: string;
+  disease: string;
+  confidence: number;
+  severity: "low" | "medium" | "critical" | "normal";
+  inferenceSpeed: string;
+  pathogen: string;
+  symptoms: string;
+  description: string;
+  recommendations: Recommendation;
+}
+
+const cropDataRecords: Record<string, CropDetail> = {
+  tomato: {
+    name: "Tomato",
+    scientificName: "Solanum lycopersicum",
+    disease: "Early Blight (Fungal Infection)",
+    confidence: 94.6,
+    severity: "medium",
+    inferenceSpeed: "42ms",
+    pathogen: "Alternaria solani",
+    symptoms: "Concentric ring spots (target spots) surrounded by chlorotic halos, starting on older leaves.",
+    description: "A common fungal disease thriving in warm, damp conditions. If left untreated, it defoliates leaves, exposing fruit to sunscald and decreasing yield.",
+    recommendations: {
+      chemical: ["Apply copper-based fungicides or mancozeb at 7-14 day intervals."],
+      organic: ["Spray liquid copper soap or Bacillus subtilis bio-fungicides.", "Apply neem oil to slow spore germination."],
+      cultural: ["Prune lower leaves to improve air circulation.", "Water only at the base (drip) to keep foliage dry.", "Mulch to prevent spores splashing from soil."]
+    }
+  },
+  potato: {
+    name: "Potato",
+    scientificName: "Solanum tuberosum",
+    disease: "Late Blight (Oomycete Decay)",
+    confidence: 98.1,
+    severity: "critical",
+    inferenceSpeed: "38ms",
+    pathogen: "Phytophthora infestans",
+    symptoms: "Large, dark water-soaked lesions on leaf margins that quickly turn necrotic, often with a white fuzzy mold under damp conditions.",
+    description: "A highly aggressive pathogen famous for the Irish Potato Famine. It can destroy an entire crop field within days under cool, wet climates.",
+    recommendations: {
+      chemical: ["Apply systemic fungicides like metalaxyl or protective chlorothalonil immediately."],
+      organic: ["Apply copper sulfate solutions as a preventative measure.", "Deploy Serenade ASO bio-fungicide."],
+      cultural: ["Immediately remove and bury/burn infected plants.", "Avoid overhead irrigation completely.", "Plant certified disease-free tubers."]
+    }
+  },
+  corn: {
+    name: "Corn (Maize)",
+    scientificName: "Zea mays",
+    disease: "Common Rust (Fungal Infection)",
+    confidence: 92.3,
+    severity: "low",
+    inferenceSpeed: "45ms",
+    pathogen: "Puccinia sorghi",
+    symptoms: "Elongated, powdery golden-brown pustules on both upper and lower leaf surfaces, leading to yellowing of surrounding tissue.",
+    description: "A windborne rust fungal infection. Usually, it causes minor yield losses unless infection occurs early in the crop development cycle.",
+    recommendations: {
+      chemical: ["Triazole or strobilurin-based fungicides (only recommended if infestation covers >10% leaf area early in the season)."],
+      organic: ["Apply dusting sulfur early in the morning when dew is present."],
+      cultural: ["Sow rust-resistant hybrid varieties.", "Rotate crops with non-grass species next season.", "Remove crop residues post-harvest."]
+    }
+  },
+  wheat: {
+    name: "Wheat",
+    scientificName: "Triticum aestivum",
+    disease: "Healthy Leaf (No Disease Detected)",
+    confidence: 99.2,
+    severity: "normal",
+    inferenceSpeed: "40ms",
+    pathogen: "None",
+    symptoms: "Uniform dark green pigmentation, strong linear leaf venation, no necrotic spots or pustules detected.",
+    description: "The specimen displays optimal cell structures with rich chlorophyll distribution. No pathogenic signatures were detected by the computer vision classification layers.",
+    recommendations: {
+      chemical: ["No chemical application needed. Monitor weather alerts for rust or powdery mildew spreads."],
+      organic: ["Maintain standard organic nutrient treatments."],
+      cultural: ["Ensure proper nitrogen fertilization levels.", "Maintain scheduled drip irrigation cycles.", "Clear weeds surrounding the field."]
+    }
+  },
+  custom: {
+    name: "Uploaded Leaf",
+    scientificName: "Specimen: Custom Upload",
+    disease: "Healthy Specimen (Simulated)",
+    confidence: 91.5,
+    severity: "normal",
+    inferenceSpeed: "56ms",
+    pathogen: "None (Specimen Normal)",
+    symptoms: "Leaf contours parsed successfully. No visible necrotic patches or lesions detected above safety threshold.",
+    description: "The uploaded leaf was analyzed by the custom pipeline. Features indicate standard cell density with uniform reflectance matching healthy foliage criteria.",
+    recommendations: {
+      chemical: ["No fungicide or pesticide treatments required based on the current scan."],
+      organic: ["Apply general seaweed extract foliar spray to boost natural immunity."],
+      cultural: ["Monitor irrigation schedule.", "Observe leaf growth patterns over the next 7 days."]
+    }
+  }
 };
 
 // Animation variants
@@ -118,6 +266,78 @@ export default function Home() {
     { id: 2, text: "Plan portfolio styling", done: false },
     { id: 3, text: "Implement contact form", done: false },
   ]);
+
+  // Project 3 state (Crypto Tracker)
+  const [selectedCoin, setSelectedCoin] = useState<"btc" | "eth" | "sol">("btc");
+  const [cryptoBalance, setCryptoBalance] = useState(12500); // USD
+  const [cryptoHoldings, setCryptoHoldings] = useState<Record<string, number>>({
+    btc: 0.08,
+    eth: 0.75,
+    sol: 12.0
+  });
+
+  const activeCoin = cryptoData[selectedCoin];
+
+  // Project 4 state (Crop Disease Predictor)
+  const [selectedCrop, setSelectedCrop] = useState<"tomato" | "potato" | "corn" | "wheat" | "custom">("tomato");
+  const [cropViewMode, setCropViewMode] = useState<"original" | "cv" | "cnn">("original");
+  const [cropScanning, setCropScanning] = useState(false);
+  const [cropScanProgress, setCropScanProgress] = useState(100);
+  const [cropScanText, setCropScanText] = useState("Scan Idle");
+  const [cropShowResults, setCropShowResults] = useState(true);
+  const [customCropImage, setCustomCropImage] = useState<string | null>(null);
+  const [customCropName, setCustomCropName] = useState<string | null>(null);
+
+  const activeCropData = cropDataRecords[selectedCrop];
+
+  const runCropAnalysis = (cropKey: "tomato" | "potato" | "corn" | "wheat" | "custom") => {
+    setSelectedCrop(cropKey);
+    setCropScanning(true);
+    setCropShowResults(false);
+    setCropScanProgress(0);
+    setCropScanText("Initializing scan...");
+
+    let progress = 0;
+    const interval = setInterval(() => {
+      progress += 5;
+      setCropScanProgress(progress);
+
+      if (progress < 25) {
+        setCropScanText("CV: Applying RGB-to-HSV color extraction...");
+      } else if (progress < 50) {
+        setCropScanText("CV: Running Canny edge contour detection...");
+      } else if (progress < 75) {
+        setCropScanText("CNN: Extracting convolutional feature maps (Conv2D)...");
+      } else if (progress < 90) {
+        setCropScanText("CNN: Generating spatial attention heatmap (Grad-CAM)...");
+      } else if (progress < 100) {
+        setCropScanText("ML: Evaluating Softmax disease class probabilities...");
+      } else {
+        setCropScanText("Diagnosis completed.");
+        clearInterval(interval);
+        setCropScanning(false);
+        setCropShowResults(true);
+        toast({
+          title: "Diagnostic Scan Complete",
+          description: `Analysis completed for ${cropKey === 'custom' ? 'Custom Upload' : cropDataRecords[cropKey].name} with ${(cropDataRecords[cropKey].confidence).toFixed(1)}% confidence.`
+        });
+      }
+    }, 100);
+  };
+
+  const handleCropImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const result = event.target?.result as string;
+        setCustomCropImage(result);
+        setCustomCropName(file.name);
+        runCropAnalysis("custom");
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   // Contact form submission success state
   const [contactSuccess, setContactSuccess] = useState(false);
@@ -223,6 +443,50 @@ export default function Home() {
     const mins = Math.floor(secs / 60);
     const s = secs % 60;
     return `${mins.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  };
+
+  const handleCryptoTrade = (type: "buy" | "sell") => {
+    const tradeAmount = 500;
+    const coinPrice = activeCoin.price;
+    const coinQty = tradeAmount / coinPrice;
+
+    if (type === "buy") {
+      if (cryptoBalance < tradeAmount) {
+        toast({
+          title: "Insufficient Funds",
+          description: `You need at least $${tradeAmount} in cash to buy ${activeCoin.name}.`,
+          variant: "destructive"
+        });
+        return;
+      }
+      setCryptoBalance(prev => prev - tradeAmount);
+      setCryptoHoldings(prev => ({
+        ...prev,
+        [selectedCoin]: prev[selectedCoin] + coinQty
+      }));
+      toast({
+        title: "Trade Executed",
+        description: `Successfully bought ${coinQty.toFixed(4)} ${activeCoin.symbol} for $${tradeAmount}.`
+      });
+    } else {
+      if (cryptoHoldings[selectedCoin] < coinQty) {
+        toast({
+          title: "Insufficient Holdings",
+          description: `You do not own enough ${activeCoin.name} to sell $${tradeAmount} worth.`,
+          variant: "destructive"
+        });
+        return;
+      }
+      setCryptoBalance(prev => prev + tradeAmount);
+      setCryptoHoldings(prev => ({
+        ...prev,
+        [selectedCoin]: prev[selectedCoin] - coinQty
+      }));
+      toast({
+        title: "Trade Executed",
+        description: `Successfully sold ${coinQty.toFixed(4)} ${activeCoin.symbol} for $${tradeAmount}.`
+      });
+    }
   };
 
   // Handle Contact Form Submit
@@ -344,9 +608,9 @@ export default function Home() {
                 <motion.div variants={fadeIn} className="flex flex-col items-center md:items-start gap-6 mb-6">
             <div className="relative">
               <img
-src="/Linkdin-pr.jpg"
+                src="/Linkdin-pr.jpg"
                 alt="Profile"
-                className="w-28 h-28 md:w-32 md:h-32 object-cover object-[center_20%] rounded-full border border-border/60 shadow-md"
+                className="w-36 h-36 md:w-44 md:h-44 object-cover object-[center_20%] rounded-full border border-border/60 shadow-md"
                 loading="eager"
               />
               <span
@@ -903,6 +1167,683 @@ src="/Linkdin-pr.jpg"
                           </div>
                         ))}
                       </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Project 3 (Crypto Tracker) */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+              
+              {/* Image / Live Widget Container */}
+              <div className="lg:col-span-7 order-1">
+                <div className="glass-card rounded-2xl overflow-hidden border border-border/50 shadow-md relative group">
+                  
+                  {/* Browser Frame Header */}
+                  <div className="h-10 border-b border-border/40 flex items-center justify-between px-4 bg-secondary/35">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-2.5 h-2.5 rounded-full bg-destructive/60" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-400/60" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-green-400/60" />
+                    </div>
+                    <div className="text-[10px] font-mono tracking-wide text-muted-foreground bg-background/50 px-4 py-0.5 rounded-sm">
+                      crypto-hub.iqra.dev
+                    </div>
+                    <div className="w-10" />
+                  </div>
+
+                  {/* Widget Body */}
+                  <div className="p-6 md:p-8 bg-background/40 min-h-[300px] flex flex-col justify-between">
+                    
+                    {/* Coin Selector Toggles */}
+                    <div className="flex gap-2 mb-6 border-b border-border/30 pb-4">
+                      {["btc", "eth", "sol"].map((coinKey) => (
+                        <button
+                          key={coinKey}
+                          onClick={() => setSelectedCoin(coinKey as any)}
+                          className={`text-xs px-3 py-1.5 rounded-full transition-all font-medium flex items-center gap-1.5 ${selectedCoin === coinKey ? "bg-primary text-primary-foreground font-semibold" : "bg-secondary/30 text-muted-foreground hover:bg-secondary/60 hover:text-foreground"}`}
+                        >
+                          <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: cryptoData[coinKey].color }} />
+                          {cryptoData[coinKey].name}
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* Content Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center flex-1">
+                      
+                      {/* Left Side: Stats and Chart */}
+                      <div className="space-y-4">
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <span className="text-[10px] text-muted-foreground uppercase font-semibold tracking-wide">Live Price</span>
+                            <div className="text-2xl font-black font-sans tracking-tight">${activeCoin.price.toLocaleString()}</div>
+                          </div>
+                          <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center gap-0.5">
+                            <ArrowUpRight className="h-3 w-3" />
+                            {activeCoin.change}%
+                          </span>
+                        </div>
+
+                        {/* Interactive Dynamic SVG Area Chart */}
+                        <div className="py-2">
+                          {(() => {
+                            const trend = activeCoin.trend;
+                            const min = Math.min(...trend);
+                            const max = Math.max(...trend);
+                            const range = max - min || 1;
+                            const points = trend.map((val, index) => {
+                              const x = (index / (trend.length - 1)) * 260 + 20;
+                              const y = 80 - ((val - min) / range) * 60;
+                              return { x, y };
+                            });
+
+                            const linePath = `M ${points.map(p => `${p.x} ${p.y}`).join(" L ")}`;
+                            const areaPath = `${linePath} L ${points[points.length - 1].x} 90 L ${points[0].x} 90 Z`;
+
+                            return (
+                              <svg className="w-full h-24 overflow-visible" viewBox="0 0 300 100">
+                                <defs>
+                                  <linearGradient id={`gradient-${selectedCoin}`} x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stopColor={activeCoin.color} stopOpacity={0.2} />
+                                    <stop offset="100%" stopColor={activeCoin.color} stopOpacity={0.0} />
+                                  </linearGradient>
+                                </defs>
+                                <path d={areaPath} fill={`url(#gradient-${selectedCoin})`} />
+                                <path d={linePath} fill="none" stroke={activeCoin.color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                                {points.map((p, i) => (
+                                  <circle key={i} cx={p.x} cy={p.y} r="3.5" className="fill-background stroke-current" style={{ color: activeCoin.color }} strokeWidth="1.5" />
+                                ))}
+                              </svg>
+                            );
+                          })()}
+                        </div>
+                      </div>
+
+                      {/* Right Side: Wallet Holdings Simulation */}
+                      <div className="p-4 rounded-xl border border-border/40 bg-secondary/15 flex flex-col justify-between h-full min-h-[140px] space-y-4">
+                        <div className="flex justify-between items-center">
+                          <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide flex items-center gap-1.5">
+                            <Wallet className="h-3.5 w-3.5 text-primary" />
+                            Mock Wallet
+                          </span>
+                          <span className="text-xs font-bold tabular-nums text-foreground">
+                            USD: ${cryptoBalance.toLocaleString()}
+                          </span>
+                        </div>
+
+                        <div>
+                          <div className="text-[10px] text-muted-foreground uppercase font-semibold tracking-wide">Your Holdings</div>
+                          <div className="flex justify-between items-baseline mt-1">
+                            <span className="text-lg font-black font-sans text-foreground tabular-nums">
+                              {cryptoHoldings[selectedCoin].toFixed(4)} {activeCoin.symbol}
+                            </span>
+                            <span className="text-xs text-muted-foreground tabular-nums">
+                              ≈ ${(cryptoHoldings[selectedCoin] * activeCoin.price).toLocaleString(undefined, { maximumFractionDigits: 2 })}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="flex gap-2">
+                          <Button 
+                            size="sm" 
+                            onClick={() => handleCryptoTrade("buy")}
+                            className="flex-1 rounded-full text-xs h-8"
+                          >
+                            Buy $500
+                          </Button>
+                          <Button 
+                            size="sm" 
+                            variant="outline"
+                            onClick={() => handleCryptoTrade("sell")}
+                            className="flex-1 rounded-full text-xs h-8"
+                          >
+                            Sell $500
+                          </Button>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    {/* Footer decoration */}
+                    <div className="flex justify-between items-center border-t border-border/30 pt-4 mt-6 text-xs text-muted-foreground font-serif">
+                      <span className="flex items-center gap-1"><TrendingUp className="h-3 w-3" /> Interactive balance simulation</span>
+                      <span>Real-time price feed mockup</span>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              {/* Text Description */}
+              <div className="lg:col-span-5 order-2 flex flex-col justify-center space-y-6">
+                <span className="text-xs font-bold uppercase tracking-wider text-primary">Featured Project</span>
+                <h3 className="text-2xl md:text-3xl font-semibold tracking-tight font-serif">Crypto Holdings & Market Analytics</h3>
+                <p className="text-muted-foreground font-serif leading-relaxed">
+                  A cryptocurrency dashboard and wallet simulator. Built to demonstrate live SVG vector chart plotting, dynamic mock portfolio updates, and stateful wallet transactions with custom validation systems.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {["React", "SVG Rendering", "Lucide Icons", "Tailwind CSS"].map((tag) => (
+                    <span key={tag} className="text-xs bg-secondary/35 px-3 py-1 rounded-full text-muted-foreground border border-border/30">{tag}</span>
+                  ))}
+                </div>
+                <div className="pt-2">
+                  <Button variant="outline" className="rounded-full hover:bg-primary hover:text-primary-foreground group" asChild>
+                    <a href="https://github.com/Iqras519/crypto-holdings" target="_blank" rel="noreferrer noopener">
+                      View GitHub Repository <ExternalLink className="ml-2 h-4 w-4 group-hover:scale-110 transition-transform" />
+                    </a>
+                  </Button>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Project 4 (Crop Disease Predictor) */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+              
+              {/* Text Description */}
+              <div className="lg:col-span-5 order-2 lg:order-1 flex flex-col justify-center space-y-6">
+                <span className="text-xs font-bold uppercase tracking-wider text-primary">Featured ML & Computer Vision Project</span>
+                <h3 className="text-2xl md:text-3xl font-semibold tracking-tight font-serif">AgroShield AI: Crop Disease Predictor</h3>
+                <p className="text-muted-foreground font-serif leading-relaxed">
+                  An end-to-end plant pathology diagnostics tool. It simulates crop leaf disease detection using a ResNet-based Convolutional Neural Network (CNN) and Computer Vision contour maps. Users can load standard crop leaf samples (Tomato, Potato, Corn, Wheat) or upload their own images to extract CV edge maps, trigger attention heatmaps (Grad-CAM), and receive detailed machine learning-powered treatment recommendations.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {["CNN (ResNet-50)", "Grad-CAM Heatmaps", "OpenCV Contours", "React"].map((tag) => (
+                    <span key={tag} className="text-xs bg-secondary/35 px-3 py-1 rounded-full text-muted-foreground border border-border/30">{tag}</span>
+                  ))}
+                </div>
+                <div className="pt-2">
+                  <Button variant="outline" className="rounded-full hover:bg-primary hover:text-primary-foreground group" asChild>
+                    <a href="https://github.com/Iqras519/agroshield-ai" target="_blank" rel="noreferrer noopener">
+                      View GitHub Repository <ExternalLink className="ml-2 h-4 w-4 group-hover:scale-110 transition-transform" />
+                    </a>
+                  </Button>
+                </div>
+              </div>
+
+              {/* Image / Live Widget Container */}
+              <div className="lg:col-span-7 order-1 lg:order-2">
+                <div className="glass-card rounded-2xl overflow-hidden border border-border/50 shadow-md relative group">
+                  
+                  {/* Browser Frame Header */}
+                  <div className="h-10 border-b border-border/40 flex items-center justify-between px-4 bg-secondary/35">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-2.5 h-2.5 rounded-full bg-destructive/60" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-400/60" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-green-400/60" />
+                    </div>
+                    <div className="text-[10px] font-mono tracking-wide text-muted-foreground bg-background/50 px-4 py-0.5 rounded-sm">
+                      agroshield.iqra.dev
+                    </div>
+                    <div className="w-10" />
+                  </div>
+
+                  {/* Widget Body */}
+                  <div className="p-6 md:p-8 bg-background/40 min-h-[300px] flex flex-col justify-between">
+                    
+                    {/* Crop Selector Toggles */}
+                    <div className="flex flex-wrap justify-between items-center gap-2 mb-6 border-b border-border/30 pb-4">
+                      <div className="flex flex-wrap gap-2">
+                        {["tomato", "potato", "corn", "wheat"].map((cropKey) => (
+                          <button
+                            key={cropKey}
+                            onClick={() => runCropAnalysis(cropKey as any)}
+                            className={`text-xs px-3 py-1.5 rounded-full transition-all font-medium flex items-center gap-1.5 ${selectedCrop === cropKey ? "bg-primary text-primary-foreground font-semibold" : "bg-secondary/30 text-muted-foreground hover:bg-secondary/60 hover:text-foreground"}`}
+                          >
+                            <span className="w-1.5 h-1.5 rounded-full bg-current" />
+                            {cropDataRecords[cropKey].name}
+                          </button>
+                        ))}
+                      </div>
+                      
+                      {/* Hidden File Input */}
+                      <input 
+                        type="file" 
+                        id="leaf-upload-input" 
+                        className="hidden" 
+                        accept="image/*" 
+                        onChange={handleCropImageUpload}
+                      />
+                      
+                      <button
+                        onClick={() => {
+                          if (selectedCrop === 'custom' && customCropImage) {
+                            runCropAnalysis('custom');
+                          } else {
+                            setSelectedCrop('custom');
+                            document.getElementById('leaf-upload-input')?.click();
+                          }
+                        }}
+                        className={`text-xs px-3 py-1.5 rounded-full transition-all font-medium flex items-center gap-1.5 ${selectedCrop === "custom" ? "bg-primary text-primary-foreground font-semibold" : "bg-secondary/30 text-muted-foreground hover:bg-secondary/60 hover:text-foreground"}`}
+                      >
+                        <Camera className="h-3 w-3" />
+                        {customCropImage ? "Re-upload" : "Upload Specimen"}
+                      </button>
+                    </div>
+
+                    {/* Content Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch flex-1">
+                      
+                      {/* Left Side: Viewfinder Visualizer */}
+                      <div 
+                        className="relative min-h-[240px] bg-black/10 dark:bg-black/35 rounded-xl border border-border/40 flex items-center justify-center cursor-pointer group/uploader overflow-hidden"
+                        onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }}
+                        onDrop={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          const file = e.dataTransfer.files?.[0];
+                          if (file) {
+                            const reader = new FileReader();
+                            reader.onload = (event) => {
+                              setCustomCropImage(event.target?.result as string);
+                              setCustomCropName(file.name);
+                              runCropAnalysis("custom");
+                            };
+                            reader.readAsDataURL(file);
+                          }
+                        }}
+                        onClick={() => {
+                          if (selectedCrop === 'custom') {
+                            document.getElementById('leaf-upload-input')?.click();
+                          }
+                        }}
+                      >
+                        {/* Scan Line Overlay */}
+                        {cropScanning ? (
+                          <div className="absolute inset-0 z-10 bg-background/70 backdrop-blur-[1px] flex flex-col items-center justify-center p-4">
+                            <motion.div 
+                              className="absolute left-0 right-0 h-0.5 bg-emerald-500 shadow-[0_0_8px_#10B981,0_0_15px_#10B981] z-20"
+                              animate={{ top: ["0%", "100%", "0%"] }}
+                              transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}
+                            />
+                            <Cpu className="h-8 w-8 text-emerald-500 animate-pulse mb-3" />
+                            <div className="text-[10px] font-semibold uppercase tracking-widest text-emerald-500 text-center mb-1">
+                              Analyzing Specimen
+                            </div>
+                            <div className="text-[9px] font-mono text-muted-foreground text-center tabular-nums max-w-[180px] truncate">
+                              {cropScanProgress}% - {cropScanText}
+                            </div>
+                            <div className="w-[100px] bg-border/40 h-1 rounded-full mt-2 overflow-hidden">
+                              <div className="h-full bg-emerald-500" style={{ width: `${cropScanProgress}%` }} />
+                            </div>
+                          </div>
+                        ) : (
+                          <>
+                            {/* View Mode controls */}
+                            {(selectedCrop !== 'custom' || customCropImage) && (
+                              <div className="absolute bottom-2 right-2 z-10 flex border border-border/60 bg-background/85 backdrop-blur-xs p-0.5 rounded-lg shadow-2xs">
+                                {(["original", "cv", "cnn"] as const).map((mode) => (
+                                  <button
+                                    key={mode}
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      setCropViewMode(mode);
+                                    }}
+                                    className={`text-[8px] uppercase tracking-wider px-2 py-0.5 rounded-md transition-all font-semibold ${cropViewMode === mode ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}
+                                  >
+                                    {mode === "original" ? "Original" : mode === "cv" ? "CV Edge" : "CNN CAM"}
+                                  </button>
+                                ))}
+                              </div>
+                            )}
+
+                            {/* Leaf Content Rendering */}
+                            {selectedCrop === 'custom' && !customCropImage ? (
+                              <div className="flex flex-col items-center justify-center p-6 text-center text-muted-foreground select-none">
+                                <Camera className="h-10 w-10 text-muted-foreground/60 mb-2 group-hover/uploader:text-primary transition-colors" />
+                                <p className="text-xs font-semibold text-foreground mb-0.5">Upload Custom Leaf</p>
+                                <p className="text-[9px] text-muted-foreground max-w-[160px]">Drag & drop leaf image here, or click to upload</p>
+                              </div>
+                            ) : selectedCrop === 'custom' && customCropImage ? (
+                              <div className="w-full h-full relative flex items-center justify-center p-4">
+                                <img 
+                                  src={customCropImage} 
+                                  alt={customCropName || "Custom crop"} 
+                                  className={`max-w-full max-h-[180px] object-contain rounded-lg transition-all ${
+                                    cropViewMode === "cv" ? "filter grayscale contrast-[3] brightness-[0.7]" : 
+                                    cropViewMode === "cnn" ? "opacity-45" : ""
+                                  }`}
+                                />
+                                {cropViewMode === "cv" && (
+                                  <>
+                                    <div className="absolute inset-[15%] border-2 border-dashed border-red-500 animate-pulse rounded pointer-events-none flex items-start justify-start p-1">
+                                      <span className="bg-red-500 text-white font-mono text-[7px] px-1 rounded">Spot Detected: 91.5%</span>
+                                    </div>
+                                    <div className="absolute inset-[30%] border border-orange-500 rounded-full animate-ping opacity-25 pointer-events-none" />
+                                  </>
+                                )}
+                                {cropViewMode === "cnn" && (
+                                  <div 
+                                    className="absolute inset-0 pointer-events-none mix-blend-color-dodge opacity-80 rounded-lg"
+                                    style={{
+                                      background: `radial-gradient(circle at 50% 50%, rgba(239, 68, 68, 0.7) 0%, rgba(245, 158, 11, 0.45) 40%, rgba(59, 130, 246, 0.15) 75%, transparent 100%)`
+                                    }}
+                                  />
+                                )}
+                              </div>
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center">
+                                <svg className="w-full h-[180px] max-w-[180px] overflow-visible" viewBox="0 0 200 200">
+                                  <defs>
+                                    <radialGradient id="cam-tomato-1" cx="40%" cy="35%" r="22%">
+                                      <stop offset="0%" stopColor="#EF4444" stopOpacity="0.8" />
+                                      <stop offset="40%" stopColor="#F59E0B" stopOpacity="0.6" />
+                                      <stop offset="70%" stopColor="#3B82F6" stopOpacity="0.3" />
+                                      <stop offset="100%" stopColor="#3B82F6" stopOpacity="0" />
+                                    </radialGradient>
+                                    <radialGradient id="cam-tomato-2" cx="60%" cy="50%" r="25%">
+                                      <stop offset="0%" stopColor="#EF4444" stopOpacity="0.75" />
+                                      <stop offset="50%" stopColor="#F59E0B" stopOpacity="0.5" />
+                                      <stop offset="100%" stopColor="#3B82F6" stopOpacity="0" />
+                                    </radialGradient>
+                                    
+                                    <radialGradient id="cam-potato-1" cx="30%" cy="40%" r="30%">
+                                      <stop offset="0%" stopColor="#EF4444" stopOpacity="0.8" />
+                                      <stop offset="50%" stopColor="#F59E0B" stopOpacity="0.5" />
+                                      <stop offset="100%" stopColor="#3B82F6" stopOpacity="0" />
+                                    </radialGradient>
+                                    <radialGradient id="cam-potato-2" cx="70%" cy="55%" r="28%">
+                                      <stop offset="0%" stopColor="#EF4444" stopOpacity="0.8" />
+                                      <stop offset="50%" stopColor="#F59E0B" stopOpacity="0.5" />
+                                      <stop offset="100%" stopColor="#3B82F6" stopOpacity="0" />
+                                    </radialGradient>
+                                    
+                                    <radialGradient id="cam-corn" cx="50%" cy="50%" r="35%">
+                                      <stop offset="0%" stopColor="#EF4444" stopOpacity="0.7" />
+                                      <stop offset="40%" stopColor="#F59E0B" stopOpacity="0.5" />
+                                      <stop offset="80%" stopColor="#3B82F6" stopOpacity="0.25" />
+                                      <stop offset="100%" stopColor="#3B82F6" stopOpacity="0" />
+                                    </radialGradient>
+
+                                    <radialGradient id="cam-wheat" cx="50%" cy="45%" r="40%">
+                                      <stop offset="0%" stopColor="#10B981" stopOpacity="0.2" />
+                                      <stop offset="50%" stopColor="#3B82F6" stopOpacity="0.1" />
+                                      <stop offset="100%" stopColor="#3B82F6" stopOpacity="0" />
+                                    </radialGradient>
+                                  </defs>
+
+                                  {selectedCrop === "tomato" && (
+                                    <g>
+                                      <path 
+                                        d="M 100 25 C 65 55, 45 100, 100 165 C 155 100, 135 55, 100 25 Z" 
+                                        fill={cropViewMode === "original" ? "#22C55E" : cropViewMode === "cv" ? "rgba(34,197,94,0.03)" : "#334155"} 
+                                        stroke={cropViewMode === "cv" ? "#10B981" : "#166534"} 
+                                        strokeWidth="2"
+                                        strokeDasharray={cropViewMode === "cv" ? "3,3" : "none"}
+                                        className="transition-colors duration-300"
+                                      />
+                                      <path d="M 100 25 L 100 165" stroke={cropViewMode === "cv" ? "rgba(16,185,129,0.3)" : "#166534"} strokeWidth="1.5" />
+                                      <path d="M 100 55 Q 75 70 55 85" stroke={cropViewMode === "cv" ? "rgba(16,185,129,0.2)" : "#166534"} strokeWidth="1" />
+                                      <path d="M 100 55 Q 125 70 145 85" stroke={cropViewMode === "cv" ? "rgba(16,185,129,0.2)" : "#166534"} strokeWidth="1" />
+                                      <path d="M 100 95 Q 70 115 50 135" stroke={cropViewMode === "cv" ? "rgba(16,185,129,0.2)" : "#166534"} strokeWidth="1" />
+                                      <path d="M 100 95 Q 130 115 150 135" stroke={cropViewMode === "cv" ? "rgba(16,185,129,0.2)" : "#166534"} strokeWidth="1" />
+                                      <path d="M 100 165 L 100 185" stroke="#78350F" strokeWidth="3" />
+
+                                      {cropViewMode === "original" && (
+                                        <g>
+                                          <circle cx={80} cy={70} r={9} className="fill-yellow-400/40" />
+                                          <circle cx={80} cy={70} r={5} fill="#78350F" stroke="#451A03" strokeWidth="0.8" />
+                                          <circle cx={80} cy={70} r={2} fill="#451A03" />
+                                          
+                                          <circle cx={120} cy={100} r={11} className="fill-yellow-400/40" />
+                                          <circle cx={120} cy={100} r={7} fill="#78350F" stroke="#451A03" strokeWidth="0.8" />
+                                          <circle cx={120} cy={100} r={3.5} fill="#451A03" />
+                                          
+                                          <circle cx={70} cy={120} r={7} className="fill-yellow-400/35" />
+                                          <circle cx={70} cy={120} r={4} fill="#78350F" stroke="#451A03" strokeWidth="0.8" />
+                                          <circle cx={70} cy={120} r={2} fill="#451A03" />
+                                        </g>
+                                      )}
+
+                                      {cropViewMode === "cv" && (
+                                        <g>
+                                          <path d="M 72 70 Q 75 60 88 68 Q 90 75 80 80 Q 70 78 72 70 Z" stroke="#F97316" strokeWidth="1.2" fill="none" />
+                                          <rect x={66} y={56} width={28} height={28} stroke="#EF4444" strokeWidth="1" fill="none" className="animate-pulse" />
+                                          <text x={66} y={52} fill="#EF4444" fontSize="6" className="font-mono">Early Blight: 94.6%</text>
+
+                                          <path d="M 110 98 Q 112 88 128 92 Q 132 108 120 112 Q 108 108 110 98 Z" stroke="#F97316" strokeWidth="1.2" fill="none" />
+                                          <rect x={106} y={86} width={30} height={30} stroke="#EF4444" strokeWidth="1" fill="none" className="animate-pulse" />
+                                          <text x={106} y={82} fill="#EF4444" fontSize="6" className="font-mono">Early Blight: 95.8%</text>
+                                        </g>
+                                      )}
+
+                                      {cropViewMode === "cnn" && (
+                                        <g style={{ mixBlendMode: "color-dodge" }}>
+                                          <circle cx={80} cy={70} r={32} fill="url(#cam-tomato-1)" />
+                                          <circle cx={120} cy={100} r={38} fill="url(#cam-tomato-2)" />
+                                          <circle cx={70} cy={120} r={25} fill="url(#cam-tomato-1)" />
+                                        </g>
+                                      )}
+                                    </g>
+                                  )}
+
+                                  {selectedCrop === "potato" && (
+                                    <g>
+                                      <path 
+                                        d="M 100 25 C 45 48, 30 100, 100 168 C 170 100, 155 48, 100 25 Z" 
+                                        fill={cropViewMode === "original" ? "#15803D" : cropViewMode === "cv" ? "rgba(16,185,129,0.03)" : "#334155"} 
+                                        stroke={cropViewMode === "cv" ? "#10B981" : "#166534"} 
+                                        strokeWidth="2"
+                                        strokeDasharray={cropViewMode === "cv" ? "3,3" : "none"}
+                                        className="transition-colors duration-300"
+                                      />
+                                      <path d="M 100 25 L 100 168" stroke={cropViewMode === "cv" ? "rgba(16,185,129,0.3)" : "#166534"} strokeWidth="1.5" />
+                                      <path d="M 100 48 Q 70 68 42 88" stroke={cropViewMode === "cv" ? "rgba(16,185,129,0.2)" : "#166534"} strokeWidth="1" />
+                                      <path d="M 100 48 Q 130 68 158 88" stroke={cropViewMode === "cv" ? "rgba(16,185,129,0.2)" : "#166534"} strokeWidth="1" />
+                                      <path d="M 100 95 Q 65 115 38 135" stroke={cropViewMode === "cv" ? "rgba(16,185,129,0.2)" : "#166534"} strokeWidth="1" />
+                                      <path d="M 100 95 Q 135 115 162 135" stroke={cropViewMode === "cv" ? "rgba(16,185,129,0.2)" : "#166534"} strokeWidth="1" />
+                                      <path d="M 100 168 L 100 185" stroke="#78350F" strokeWidth="3.5" />
+
+                                      {cropViewMode === "original" && (
+                                        <g>
+                                          <path d="M 38 72 C 30 80 28 95 48 90 C 58 82 52 75 38 72 Z" fill="#2E251E" stroke="#450A0A" strokeWidth="0.8" />
+                                          <path d="M 39 74 C 33 80 32 90 45 87" stroke="#84CC16" strokeWidth="0.8" fill="none" opacity="0.6" />
+                                          
+                                          <path d="M 152 105 C 165 115 160 130 142 122 C 138 115 145 110 152 105 Z" fill="#2E251E" stroke="#450A0A" strokeWidth="0.8" />
+                                          <path d="M 150 107 C 158 114 155 125 144 119" stroke="#84CC16" strokeWidth="0.8" fill="none" opacity="0.6" />
+                                        </g>
+                                      )}
+
+                                      {cropViewMode === "cv" && (
+                                        <g>
+                                          <rect x={26} y={66} width={28} height={28} stroke="#EF4444" strokeWidth="1" fill="none" className="animate-pulse" />
+                                          <text x={26} y={62} fill="#EF4444" fontSize="6" className="font-mono">Late Blight: 98.1%</text>
+
+                                          <rect x={134} y={96} width={32} height={32} stroke="#EF4444" strokeWidth="1" fill="none" className="animate-pulse" />
+                                          <text x={134} y={92} fill="#EF4444" fontSize="6" className="font-mono">Late Blight: 97.4%</text>
+                                        </g>
+                                      )}
+
+                                      {cropViewMode === "cnn" && (
+                                        <g style={{ mixBlendMode: "color-dodge" }}>
+                                          <circle cx={40} cy={82} r={32} fill="url(#cam-potato-1)" />
+                                          <circle cx={150} cy={114} r={30} fill="url(#cam-potato-2)" />
+                                        </g>
+                                      )}
+                                    </g>
+                                  )}
+
+                                  {selectedCrop === "corn" && (
+                                    <g>
+                                      <path 
+                                        d="M 30 165 C 60 125 120 65 180 25 C 145 65 90 115 30 165 Z" 
+                                        fill={cropViewMode === "original" ? "#84CC16" : cropViewMode === "cv" ? "rgba(16,185,129,0.03)" : "#334155"} 
+                                        stroke={cropViewMode === "cv" ? "#10B981" : "#4D7C0F"} 
+                                        strokeWidth="2"
+                                        strokeDasharray={cropViewMode === "cv" ? "3,3" : "none"}
+                                        className="transition-colors duration-300"
+                                      />
+                                      <path d="M 30 165 C 85 105 140 55 180 25" stroke={cropViewMode === "cv" ? "rgba(16,185,129,0.3)" : "#4D7C0F"} strokeWidth="1.5" />
+                                      <path d="M 35 160 C 80 108 130 63 170 33" stroke={cropViewMode === "cv" ? "rgba(16,185,129,0.15)" : "#65A30D"} strokeWidth="0.8" />
+                                      <path d="M 28 168 C 75 115 120 70 160 40" stroke={cropViewMode === "cv" ? "rgba(16,185,129,0.15)" : "#65A30D"} strokeWidth="0.8" />
+
+                                      {cropViewMode === "original" && (
+                                        <g fill="#A16207" stroke="#EA580C" strokeWidth="0.5">
+                                          <circle cx={75} cy={125} r={1.5} />
+                                          <circle cx={82} cy={118} r={2} />
+                                          <circle cx={92} cy={115} r={1.5} />
+                                          <circle cx={100} cy={102} r={2.5} fill="#78350F" />
+                                          <circle cx={108} cy={95} r={1.5} />
+                                          <circle cx={120} cy={88} r={2} />
+                                          <circle cx={126} cy={76} r={2.5} fill="#78350F" />
+                                          <circle cx={138} cy={72} r={1.5} />
+                                          <circle cx={145} cy={60} r={2} />
+                                        </g>
+                                      )}
+
+                                      {cropViewMode === "cv" && (
+                                        <g>
+                                          <rect x={70} y={55} width={80} height={80} stroke="#EF4444" strokeWidth="1" fill="none" className="animate-pulse" />
+                                          <text x={70} y={50} fill="#EF4444" fontSize="6" className="font-mono">Pustules: 92.3%</text>
+                                          <circle cx={100} cy={102} r={5} stroke="#F97316" strokeWidth="0.8" fill="none" />
+                                          <circle cx={126} cy={76} r={5} stroke="#F97316" strokeWidth="0.8" fill="none" />
+                                        </g>
+                                      )}
+
+                                      {cropViewMode === "cnn" && (
+                                        <g style={{ mixBlendMode: "color-dodge" }}>
+                                          <circle cx={110} cy={95} r={45} fill="url(#cam-corn)" />
+                                        </g>
+                                      )}
+                                    </g>
+                                  )}
+
+                                  {selectedCrop === "wheat" && (
+                                    <g>
+                                      <path 
+                                        d="M 100 170 C 80 125 80 50 100 15 C 120 50 120 125 100 170 Z" 
+                                        fill={cropViewMode === "original" ? "#22C55E" : cropViewMode === "cv" ? "rgba(16,185,129,0.03)" : "#334155"} 
+                                        stroke={cropViewMode === "cv" ? "#10B981" : "#166534"} 
+                                        strokeWidth="2"
+                                        strokeDasharray={cropViewMode === "cv" ? "3,3" : "none"}
+                                        className="transition-colors duration-300"
+                                      />
+                                      <path d="M 100 170 L 100 15" stroke={cropViewMode === "cv" ? "rgba(16,185,129,0.3)" : "#166534"} strokeWidth="1.5" />
+                                      <path d="M 100 170 L 100 185" stroke="#78350F" strokeWidth="2.5" />
+
+                                      {cropViewMode === "cv" && (
+                                        <g>
+                                          <rect x={76} y={12} width={48} height={160} stroke="#10B981" strokeWidth="1" fill="none" />
+                                          <text x={100} y={8} textAnchor="middle" fill="#10B981" fontSize="6" className="font-mono">Healthy: 99.2%</text>
+                                        </g>
+                                      )}
+
+                                      {cropViewMode === "cnn" && (
+                                        <g style={{ mixBlendMode: "color-dodge" }}>
+                                          <ellipse cx={100} cy={92} rx={18} ry={60} fill="url(#cam-wheat)" />
+                                        </g>
+                                      )}
+                                    </g>
+                                  )}
+                                </svg>
+                              </div>
+                            )}
+                          </>
+                        )}
+                      </div>
+
+                      {/* Right Side: Diagnostics HUD Card */}
+                      <div className="flex flex-col justify-between h-full space-y-4">
+                        <div className="flex justify-between items-center text-[10px] font-semibold text-muted-foreground uppercase tracking-wide">
+                          <span className="flex items-center gap-1"><Cpu className="h-3 w-3" /> ResNet CNN Inference</span>
+                          <span className="font-mono tabular-nums text-foreground">{cropScanning ? "Scanning..." : activeCropData.inferenceSpeed}</span>
+                        </div>
+
+                        <div className="space-y-3">
+                          <div className="space-y-0.5">
+                            <div className="text-[9px] text-muted-foreground uppercase font-bold tracking-wider">Classification Result</div>
+                            <div className="text-base font-bold font-serif text-foreground leading-tight">
+                              {cropScanning ? "Analyzing features..." : (selectedCrop === 'custom' && !customCropImage) ? "Specimen Upload Needed" : activeCropData.disease}
+                            </div>
+                            {selectedCrop === 'custom' && customCropImage && !cropScanning && (
+                              <div className="text-[9px] text-muted-foreground italic truncate">Source: {customCropName}</div>
+                            )}
+                          </div>
+
+                          <div className="grid grid-cols-2 gap-3">
+                            <div className="p-2.5 rounded-xl border border-border/40 bg-secondary/10 flex flex-col justify-between">
+                              <span className="text-[8px] text-muted-foreground uppercase font-bold tracking-wider">Confidence</span>
+                              <div className="flex items-baseline gap-0.5 mt-0.5">
+                                <span className="text-lg font-black font-sans text-foreground tabular-nums leading-none">
+                                  {cropScanning ? "--.-" : (selectedCrop === 'custom' && !customCropImage) ? "0.0" : activeCropData.confidence.toFixed(1)}
+                                </span>
+                                <span className="text-[10px] text-muted-foreground">%</span>
+                              </div>
+                            </div>
+
+                            <div className="p-2.5 rounded-xl border border-border/40 bg-secondary/10 flex flex-col justify-between">
+                              <span className="text-[8px] text-muted-foreground uppercase font-bold tracking-wider">Severity</span>
+                              <span className={`text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded mt-1.5 text-center leading-none ${
+                                cropScanning ? 'bg-secondary/40 text-muted-foreground' :
+                                activeCropData.severity === 'critical' ? 'bg-red-500/10 text-red-500 border border-red-500/20' :
+                                activeCropData.severity === 'medium' ? 'bg-amber-500/10 text-amber-500 border border-amber-500/20' :
+                                activeCropData.severity === 'low' ? 'bg-yellow-500/10 text-yellow-500 border border-yellow-500/20' :
+                                'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20'
+                              }`}>
+                                {cropScanning ? "Scanning" : (selectedCrop === 'custom' && !customCropImage) ? "None" : activeCropData.severity}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {cropScanning ? (
+                          <div className="p-3 rounded-lg border border-dashed border-border/30 text-center text-[10px] text-muted-foreground py-8 animate-pulse">
+                            Convolutional feature maps are being generated. Extracting color histogram values and contour edge coordinates...
+                          </div>
+                        ) : (selectedCrop === 'custom' && !customCropImage) ? (
+                          <div className="p-3 rounded-lg border border-dashed border-border/30 text-center text-[10px] text-muted-foreground py-8">
+                            Please select a predefined crop or upload a leaf image to start the machine learning pathology analysis.
+                          </div>
+                        ) : (
+                          <div className="space-y-2 text-xs">
+                            <div className="border-t border-border/20 pt-2">
+                              <span className="font-semibold text-foreground uppercase tracking-wide text-[8px] block mb-0.5">Identified Pathogen:</span>
+                              <span className="font-serif text-muted-foreground italic text-[11px] leading-tight block">{activeCropData.scientificName} ({activeCropData.pathogen})</span>
+                            </div>
+                            <div>
+                              <span className="font-semibold text-foreground uppercase tracking-wide text-[8px] block mb-0.5">Symptom Summary:</span>
+                              <p className="font-serif text-muted-foreground leading-tight text-[11px]">{activeCropData.symptoms}</p>
+                            </div>
+                            
+                            <div className="border-t border-border/20 pt-2">
+                              <span className="font-semibold text-foreground uppercase tracking-wide text-[8px] block mb-1 flex items-center gap-1">
+                                <ShieldAlert className="h-2.5 w-2.5 text-primary animate-pulse" /> ML Recommendation Engine
+                              </span>
+                              <div className="space-y-1 max-h-[85px] overflow-y-auto pr-1">
+                                {activeCropData.recommendations.chemical.map((rec, i) => (
+                                  <div key={i} className="flex gap-1.5 text-[9px] leading-normal">
+                                    <span className="text-primary font-bold text-[7px] uppercase px-1 rounded bg-primary/10 h-fit mt-0.5 flex-shrink-0">Chem</span>
+                                    <span className="text-muted-foreground font-serif">{rec}</span>
+                                  </div>
+                                ))}
+                                {activeCropData.recommendations.organic.map((rec, i) => (
+                                  <div key={i} className="flex gap-1.5 text-[9px] leading-normal">
+                                    <span className="text-emerald-500 font-bold text-[7px] uppercase px-1 rounded bg-emerald-500/10 h-fit mt-0.5 flex-shrink-0">Bio</span>
+                                    <span className="text-muted-foreground font-serif">{rec}</span>
+                                  </div>
+                                ))}
+                                {activeCropData.recommendations.cultural.map((rec, i) => (
+                                  <div key={i} className="flex gap-1.5 text-[9px] leading-normal">
+                                    <span className="text-blue-500 font-bold text-[7px] uppercase px-1 rounded bg-blue-500/10 h-fit mt-0.5 flex-shrink-0">Cult</span>
+                                    <span className="text-muted-foreground font-serif">{rec}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                    </div>
+
+                    {/* Footer decoration */}
+                    <div className="flex justify-between items-center border-t border-border/30 pt-4 mt-6 text-xs text-muted-foreground font-serif">
+                      <span className="flex items-center gap-1"><Layers className="h-3 w-3" /> Grad-CAM map overlays enabled</span>
+                      <span>Dataset: PlantVillage v2</span>
                     </div>
 
                   </div>
